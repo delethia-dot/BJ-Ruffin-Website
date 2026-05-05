@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audiobooks — BJ Ruffin</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/site.css">
+<style>
+
+.ab-hero{padding:80px 32px 40px;max-width:1440px;margin:0 auto}
+.ab-hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);margin-bottom:24px;display:flex;gap:14px;align-items:center}
+.ab-hero .eyebrow::before{content:'';width:28px;height:1px;background:var(--rose)}
+.ab-hero h1{font-family:var(--serif);font-size:clamp(56px,7vw,108px);font-weight:300;line-height:.95;letter-spacing:-.02em;color:var(--ink);font-variation-settings:"opsz" 144;margin-bottom:24px}
+.ab-hero h1 em{font-style:italic;color:var(--plum)}
+.ab-hero .lede{font-family:var(--serif);font-style:italic;font-size:22px;font-weight:300;line-height:1.4;color:var(--ink-soft);max-width:680px}
+
+.ab-status{max-width:1440px;margin:32px auto 0;padding:20px 32px;display:flex;gap:32px;align-items:center;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+.ab-status b{color:var(--plum)}
+.ab-status .dot{width:8px;height:8px;border-radius:50%;background:var(--rose);display:inline-block;margin-right:8px;vertical-align:middle}
+
+.ab-block{max-width:1440px;margin:0 auto;padding:80px 32px;border-bottom:1px solid var(--rule)}
+.ab-block-head{margin-bottom:48px}
+.ab-block-head .num{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--rose);letter-spacing:.05em;display:block;margin-bottom:8px}
+.ab-block-head h2{font-family:var(--serif);font-size:clamp(40px,4.5vw,64px);font-weight:300;line-height:1;letter-spacing:-.02em;color:var(--ink);font-variation-settings:"opsz" 144}
+.ab-block-head h2 em{font-style:italic;color:var(--plum)}
+.ab-block-head .narrator{font-family:var(--serif);font-style:italic;font-size:18px;color:var(--ink-soft);margin-top:14px}
+.ab-block-head .narrator b{color:var(--plum);font-weight:500;font-style:normal}
+
+.ab-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:48px 40px}
+.ab-card{display:grid;grid-template-columns:140px 1fr;gap:24px;align-items:start}
+.ab-card .cover{aspect-ratio:5/8;border-radius:3px;background:linear-gradient(160deg,var(--rose-tint),var(--rose-soft));box-shadow:0 14px 40px -16px rgba(90,47,58,.35);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.ab-card.b2 .cover{background:linear-gradient(160deg,#E8D7CE,#C9A697)}
+.ab-card.b3 .cover{background:linear-gradient(160deg,#D4B8A8,#8C5A3F)}
+.ab-card.b4 .cover{background:linear-gradient(160deg,#E5CFB8,#B8856B)}
+.ab-card.b5 .cover{background:linear-gradient(160deg,#C8DAE6,#6F8FA8)}
+.ab-card.b6 .cover{background:linear-gradient(160deg,#E2C9CE,#A56D75)}
+.ab-card .cover .play{position:absolute;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center;color:var(--plum);font-size:14px}
+.ab-card .cover .badge{position:absolute;top:8px;left:8px;background:var(--plum);color:var(--paper);font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;padding:4px 8px;border-radius:2px}
+.ab-card .cover .badge.coming{background:var(--rose);color:var(--plum-deep)}
+.ab-card .num{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:6px}
+.ab-card h3{font-family:var(--serif);font-size:22px;font-weight:400;line-height:1.2;color:var(--ink);margin-bottom:6px}
+.ab-card h3 em{font-style:italic;color:var(--plum)}
+.ab-card .runtime{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--rose);margin-bottom:14px}
+.ab-card .retailers{display:flex;flex-wrap:wrap;gap:6px}
+.ab-card .retailers a{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--ink-soft);transition:all .25s}
+.ab-card .retailers a:hover{border-color:var(--plum);color:var(--plum)}
+
+.ab-cta{background:var(--ivory);padding:80px 32px;text-align:center}
+.ab-cta-inner{max-width:680px;margin:0 auto}
+.ab-cta .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);margin-bottom:18px}
+.ab-cta h2{font-family:var(--serif);font-size:clamp(32px,4vw,52px);font-weight:300;line-height:1.05;letter-spacing:-.02em;color:var(--ink);font-variation-settings:"opsz" 144;margin-bottom:18px}
+.ab-cta h2 em{font-style:italic;color:var(--plum)}
+.ab-cta p{font-family:var(--serif);font-style:italic;font-size:18px;color:var(--ink-soft);margin-bottom:32px}
+
+@media (max-width:1080px){.ab-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:680px){.ab-grid{grid-template-columns:1fr}.ab-card{grid-template-columns:100px 1fr;gap:16px}}
+
+</style>
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '353292');
+</script>
+<!-- End MailerLite Universal -->
+</head>
+<body>
+
+<!-- TOP STRIP -->
+<div class="top-strip">
+  <span>VOL. 04 · ISSUE 02 · SPRING 2026</span>
+  <div class="ticker"><div class="ticker-track">
+    <span>NEW SERIES — HEARTS OF SUGAR SPRINGS 1 — MAY 6</span>
+    <span>FREE READ — A BLOSSOMING LOVE</span>
+    <span>NEW SERIES — HEARTS OF SUGAR SPRINGS 1 — MAY 6</span>
+    <span>FREE READ — A BLOSSOMING LOVE</span>
+  </div></div>
+  <a href="mailto:bj@bjruffin.com">bj@bjruffin.com</a>
+</div>
+
+<!-- NAV -->
+<nav class="site">
+  <div class="nav-grid">
+    <div class="nav-left">
+      <a href="/library" class="nav-link">Library</a>
+      <a href="/my-story" class="nav-link">My Story</a>
+      <a href="/blog" class="nav-link">Blog</a>
+      <a href="/audiobooks" class="nav-link">Audiobooks <span style="opacity:.55;font-size:.78em;letter-spacing:.05em">(coming soon)</span></a>
+    </div>
+    <a href="/" class="brand" aria-label="BJ Ruffin Stories">
+      <svg viewBox="0 0 300 135" xmlns="http://www.w3.org/2000/svg">
+        <path class="chev" d="M126 33 L150 50 L174 33"></path>
+        <circle class="dot" cx="150" cy="40" r="4.5"></circle>
+        <line class="rule" x1="150" y1="50" x2="150" y2="60" stroke-width="1.2" opacity=".25"></line>
+        <text class="wordmark" x="150" y="93" text-anchor="middle">BJ Ruffin</text>
+        <line class="rule" x1="68" y1="102" x2="100" y2="102"></line>
+        <line class="rule" x1="200" y1="102" x2="232" y2="102"></line>
+        <text class="stories" x="150" y="118" text-anchor="middle">STORIES</text>
+      </svg>
+    </a>
+    <div class="nav-right">
+      <a href="/#newsletter" class="nav-link">Newsletter</a>
+      <a href="https://quiz.bjruffin.com/sf/67cf92ee" class="nav-link">Quiz</a>
+      <a href="https://dl.bookfunnel.com/5ak59tk5wf" class="nav-cta">Free Read</a>
+    </div>
+  </div>
+</nav>
+
+
+<section class="ab-hero reveal">
+  <div class="eyebrow">Audiobooks · Listen</div>
+  <h1>Stories that <em>read themselves</em> to you.</h1>
+  <p class="lede">Settle in. Pour the coffee. Let Sugar Springs and the Vermont mountains come to life through the voices that bring them home.</p>
+</section>
+
+<div class="ab-status reveal">
+  <span><span class="dot"></span><b>Coming Soon · In Audio</b></span>
+  <span>· 07 in production</span>
+  <span>· New releases every two weeks</span>
+</div>
+
+<!-- LOVE & LEGACY (out now) -->
+<section class="ab-block reveal">
+  <div class="ab-block-head">
+    <span class="num">Series 01 · Coming June 2026</span>
+    <h2>Love &amp; <em>Legacy</em></h2>
+    <p class="narrator">Narrated by <b>Narrator Name</b> · 6 books · Coming June 2026</p>
+  </div>
+  <div class="ab-grid">
+    <!-- TODO: Replace cover with <img src="/images/covers/ll-book1.jpg" alt="Love and Legacy Book 1" loading="lazy"> -->
+    <div class="ab-card b1">
+      <div class="cover"><img src="/images/covers/ll-book1.jpg" alt="Love and Legacy Book 1" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><span class="badge coming">Soon</span></div>
+      <div>
+        <div class="num">No. 01</div>
+        <h3>The Inn at Maple <em>Grove</em></h3>
+        <div class="runtime">In production · June 2026</div>
+        <div class="retailers"><a href="/#newsletter">Notify me</a></div>
+      </div>
+    </div>
+    <!-- TODO: Replace cover with <img src="/images/covers/ll-book2.jpg" alt="Love and Legacy Book 2" loading="lazy"> -->
+    <div class="ab-card b2">
+      <div class="cover"><img src="/images/covers/ll-book2.jpg" alt="Love and Legacy Book 2" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><span class="badge coming">Soon</span></div>
+      <div>
+        <div class="num">No. 02</div>
+        <h3>Something Worth <em>Staying For</em></h3>
+        <div class="runtime">In production · June 2026</div>
+        <div class="retailers"><a href="/#newsletter">Notify me</a></div>
+      </div>
+    </div>
+    <!-- TODO: Replace cover with <img src="/images/covers/ll-book3.jpg" alt="Love and Legacy Book 3" loading="lazy"> -->
+    <div class="ab-card b3">
+      <div class="cover"><img src="/images/covers/ll-book3.jpg" alt="Love and Legacy Book 3" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><span class="badge coming">Soon</span></div>
+      <div>
+        <div class="num">No. 03</div>
+        <h3>Between Us and <em>the Truth</em></h3>
+        <div class="runtime">In production · Summer 2026</div>
+        <div class="retailers"><a href="/#newsletter">Notify me</a></div>
+      </div>
+    </div>
+    <!-- TODO: Replace cover with <img src="/images/covers/ll-book4.jpg" alt="Love and Legacy Book 4" loading="lazy"> -->
+    <div class="ab-card b4">
+      <div class="cover"><img src="/images/covers/ll-book4.jpg" alt="Love and Legacy Book 4" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><span class="badge coming">Soon</span></div>
+      <div>
+        <div class="num">No. 04</div>
+        <h3>Hold <em>On</em></h3>
+        <div class="runtime">In production · Summer 2026</div>
+        <div class="retailers"><a href="/#newsletter">Notify me</a></div>
+      </div>
+    </div>
+    <!-- TODO: Replace cover with <img src="/images/covers/ll-book5.jpg" alt="Love and Legacy Book 5" loading="lazy"> -->
+    <div class="ab-card b5">
+      <div class="cover"><img src="/images/covers/ll-book5.jpg" alt="Love and Legacy Book 5" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><span class="badge coming">Soon</span></div>
+      <div>
+        <div class="num">No. 05</div>
+        <h3>After the <em>Fire</em></h3>
+        <div class="runtime">In production · Fall 2026</div>
+        <div class="retailers"><a href="/#newsletter">Notify me</a></div>
+      </div>
+    </div>
+    <!-- TODO: Replace cover with <img src="/images/covers/ll-book6.jpg" alt="Love and Legacy Book 6" loading="lazy"> -->
+    <div class="ab-card b6">
+      <div class="cover"><img src="/images/covers/ll-book6.jpg" alt="Love and Legacy Book 6" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><span class="badge coming">Soon</span></div>
+      <div>
+        <div class="num">No. 06</div>
+        <h3>Maple in <em>Bloom</em></h3>
+        <div class="runtime">In production · Fall 2026</div>
+        <div class="retailers"><a href="/#newsletter">Notify me</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUGAR SPRINGS (planned) -->
+<section class="ab-block reveal" style="border-bottom:none">
+  <div class="ab-block-head">
+    <span class="num">Series 02 · Coming May–July 2026</span>
+    <h2>Hearts of <em>Sugar Springs</em></h2>
+    <p class="narrator">All six books recording — <b>biweekly releases May–July 2026</b></p>
+  </div>
+  <div class="ab-grid">
+    <!-- TODO: Replace cover with <img src="/images/covers/hoss-book1.jpg" alt="Hearts of Sugar Springs Book 1" loading="lazy"> -->
+    <div class="ab-card b3"><div class="cover"><img src="/images/covers/hoss-book1.jpg" alt="Hearts of Sugar Springs Book 1" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><span class="badge coming">Soon</span></div><div><div class="num">No. 01</div><h3>Book <em>1</em></h3><div class="runtime">May 13, 2026</div><div class="retailers"><a href="/#newsletter">Notify me</a></div></div></div>
+    <!-- TODO: Replace cover with <img src="/images/covers/hoss-book2.jpg" alt="Hearts of Sugar Springs Book 2" loading="lazy"> -->
+    <div class="ab-card b2"><div class="cover"><img src="/images/covers/hoss-book2.jpg" alt="Hearts of Sugar Springs Book 2" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><span class="badge coming">Soon</span></div><div><div class="num">No. 02</div><h3>Book <em>2</em></h3><div class="runtime">May 27, 2026</div><div class="retailers"><a href="/#newsletter">Notify me</a></div></div></div>
+    <!-- TODO: Replace cover with <img src="/images/covers/hoss-book3.jpg" alt="Hearts of Sugar Springs Book 3" loading="lazy"> -->
+    <div class="ab-card b4"><div class="cover"><img src="/images/covers/hoss-book3.jpg" alt="Hearts of Sugar Springs Book 3" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><span class="badge coming">Soon</span></div><div><div class="num">No. 03</div><h3>Book <em>3</em></h3><div class="runtime">June 10, 2026</div><div class="retailers"><a href="/#newsletter">Notify me</a></div></div></div>
+    <!-- TODO: Replace cover with <img src="/images/covers/hoss-book4.jpg" alt="Hearts of Sugar Springs Book 4" loading="lazy"> -->
+    <div class="ab-card b5"><div class="cover"><img src="/images/covers/hoss-book4.jpg" alt="Hearts of Sugar Springs Book 4" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><span class="badge coming">Soon</span></div><div><div class="num">No. 04</div><h3>Book <em>4</em></h3><div class="runtime">June 24, 2026</div><div class="retailers"><a href="/#newsletter">Notify me</a></div></div></div>
+    <!-- TODO: Replace cover with <img src="/images/covers/hoss-book5.jpg" alt="Hearts of Sugar Springs Book 5" loading="lazy"> -->
+    <div class="ab-card b6"><div class="cover"><img src="/images/covers/hoss-book5.jpg" alt="Hearts of Sugar Springs Book 5" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><span class="badge coming">Soon</span></div><div><div class="num">No. 05</div><h3>Book <em>5</em></h3><div class="runtime">July 8, 2026</div><div class="retailers"><a href="/#newsletter">Notify me</a></div></div></div>
+    <!-- TODO: Replace cover with <img src="/images/covers/hoss-book6.jpg" alt="Hearts of Sugar Springs Book 6" loading="lazy"> -->
+    <div class="ab-card b1"><div class="cover"><img src="/images/covers/hoss-book6.jpg" alt="Hearts of Sugar Springs Book 6" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><span class="badge coming">Soon</span></div><div><div class="num">No. 06</div><h3>Book <em>6</em></h3><div class="runtime">July 22, 2026</div><div class="retailers"><a href="/#newsletter">Notify me</a></div></div></div>
+  </div>
+</section>
+
+<section class="ab-cta reveal">
+  <div class="ab-cta-inner">
+    <div class="eyebrow">Be the first to listen</div>
+    <h2>Get notified when each <em>audiobook</em> drops.</h2>
+    <p>I'll email you the moment a new audio edition goes live, with a link to your favorite retailer.</p>
+    <a href="/#newsletter" class="btn btn-primary">Join the Listener List <span class="arrow">→</span></a>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div>
+      <div class="foot-brand">
+        <svg viewBox="0 0 300 135" xmlns="http://www.w3.org/2000/svg" style="height:80px;width:auto;display:block">
+          <path d="M126 33 L150 50 L174 33" stroke="#DCA1A8" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+          <circle cx="150" cy="40" r="4.5" fill="#DCA1A8" opacity="0.5"></circle>
+          <line x1="150" y1="50" x2="150" y2="60" stroke="#DCA1A8" stroke-width="1.2" opacity="0.3"></line>
+          <text x="150" y="93" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="38" font-weight="400" fill="#FBF7F2" letter-spacing="3">BJ Ruffin</text>
+          <line x1="68" y1="102" x2="100" y2="102" stroke="#DCA1A8" stroke-width="0.8" opacity="0.4"></line>
+          <line x1="200" y1="102" x2="232" y2="102" stroke="#DCA1A8" stroke-width="0.8" opacity="0.4"></line>
+          <text x="150" y="118" text-anchor="middle" font-family="DM Mono, monospace" font-size="11" fill="#DCA1A8" letter-spacing="8" font-weight="400">STORIES</text>
+        </svg>
+      </div>
+      <p class="foot-desc">Sweet, clean romances about love, family, and the resilience of the human spirit — from the mountains of Vermont to the ranches of Sugar Springs.</p>
+      <div class="foot-social">
+        <a href="https://instagram.com/bjruffinauthor?igshid=MzNlNGNkZWQ4Mg==" target="_blank" rel="noopener" aria-label="Instagram">Ig</a>
+        <a href="https://www.facebook.com/bjruffinromance/" target="_blank" rel="noopener" aria-label="Facebook">Fb</a>
+        <a href="https://pin.it/5ar5LzB8l" target="_blank" rel="noopener" aria-label="Pinterest">Pt</a>
+        <a href="https://www.goodreads.com/author/show/49152576.B_J_Ruffin" target="_blank" rel="noopener" aria-label="Goodreads">Gr</a>
+      </div>
+    </div>
+    <div class="foot-col">
+      <h5>Navigate</h5>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/my-story">My Story</a></li>
+        <li><a href="/library">Library</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/audiobooks">Audiobooks</a></li>
+        <li><a href="/#newsletter">Newsletter</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Shop</h5>
+      <ul>
+        <li><a href="https://www.amazon.com/author/bjruffinstories">Amazon Store</a></li>
+        <li><a href="#TODO-payhip-store" title="TODO: Insert Payhip store URL">Payhip Store</a></li>
+        <li><a href="https://dl.bookfunnel.com/5ak59tk5wf">Free Read</a></li>
+        <li><a href="https://quiz.bjruffin.com/sf/67cf92ee">Take the Quiz</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Connect</h5>
+      <ul>
+        <li><a href="mailto:bj@bjruffin.com">bj@bjruffin.com</a></li>
+        <li><a href="#">Charlotte, NC</a></li>
+        </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 BJ Ruffin · All rights reserved</span>
+    <span><a href="https://www.freeprivacypolicy.com/live/c646f873-2a65-494b-8584-55ae36ba83bc" target="_blank" rel="noopener">Privacy</a></span>
+  </div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(
+    (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); }),
+    { threshold: 0.08 }
+  );
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>

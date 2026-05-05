@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Library — BJ Ruffin</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/site.css">
+<style>
+
+.lib-hero{padding:80px 32px 40px;max-width:1440px;margin:0 auto}
+.lib-hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);margin-bottom:24px;display:flex;gap:14px;align-items:center}
+.lib-hero .eyebrow::before{content:'';width:28px;height:1px;background:var(--rose)}
+.lib-hero h1{font-family:var(--serif);font-size:clamp(56px,7vw,108px);font-weight:300;line-height:.95;letter-spacing:-.02em;color:var(--ink);font-variation-settings:"opsz" 144;margin-bottom:24px}
+.lib-hero h1 em{font-style:italic;color:var(--plum);font-weight:400}
+.lib-hero .lede{font-family:var(--serif);font-style:italic;font-size:22px;font-weight:300;line-height:1.4;color:var(--ink-soft);max-width:680px}
+
+.lib-filters{max-width:1440px;margin:48px auto 24px;padding:0 32px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding-top:20px;padding-bottom:20px}
+.lib-filters .label{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);margin-right:8px}
+.chip{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:7px 14px;border:1px solid var(--rule);border-radius:999px;color:var(--ink-soft);cursor:pointer;transition:all .25s}
+.chip:hover{border-color:var(--plum);color:var(--plum)}
+.chip.active{background:var(--plum);color:var(--paper);border-color:var(--plum)}
+
+.series-block{max-width:1440px;margin:0 auto;padding:64px 32px;border-bottom:1px solid var(--rule)}
+.series-head{display:grid;grid-template-columns:1fr auto;gap:32px;align-items:end;margin-bottom:48px}
+.series-head .num{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--rose);letter-spacing:.05em;display:block;margin-bottom:8px}
+.series-head h2{font-family:var(--serif);font-size:clamp(40px,4.5vw,64px);font-weight:300;line-height:1;letter-spacing:-.02em;color:var(--ink);font-variation-settings:"opsz" 144}
+.series-head h2 em{font-style:italic;color:var(--plum)}
+.series-head .meta{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);text-align:right;line-height:1.8}
+.series-head .meta b{color:var(--plum);font-weight:500}
+
+.series-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:24px}
+.book-card{display:flex;flex-direction:column;gap:14px;cursor:pointer;transition:transform .35s}
+.book-card:hover{transform:translateY(-4px)}
+.book-card .cover{aspect-ratio:5/8;border-radius:3px;background:linear-gradient(160deg,var(--rose-tint),var(--rose-soft));display:flex;align-items:center;justify-content:center;box-shadow:0 14px 40px -16px rgba(90,47,58,.35);position:relative;overflow:hidden}
+.book-card.b2 .cover{background:linear-gradient(160deg,#E8D7CE,#C9A697)}
+.book-card.b3 .cover{background:linear-gradient(160deg,#D4B8A8,#8C5A3F)}
+.book-card.b4 .cover{background:linear-gradient(160deg,#E5CFB8,#B8856B)}
+.book-card.b5 .cover{background:linear-gradient(160deg,#C8DAE6,#6F8FA8)}
+.book-card.b6 .cover{background:linear-gradient(160deg,#E2C9CE,#A56D75)}
+.book-card .cover-stamp{font-family:var(--serif);font-style:italic;font-size:13px;color:rgba(255,255,255,.85);text-align:center;padding:0 16px;line-height:1.3}
+.book-card .cover-stamp strong{display:block;font-style:normal;font-size:11px;font-family:var(--mono);letter-spacing:.18em;text-transform:uppercase;margin-top:6px;color:rgba(255,255,255,.55)}
+.book-card .badge{position:absolute;top:10px;left:10px;background:var(--plum);color:var(--paper);font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;padding:4px 8px;border-radius:2px}
+.book-card .badge.coming{background:var(--rose);color:var(--plum-deep)}
+.book-card .info .num{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:4px}
+.book-card .info h3{font-family:var(--serif);font-size:18px;font-weight:400;line-height:1.2;color:var(--ink);margin-bottom:4px}
+.book-card .info h3 em{font-style:italic;color:var(--plum)}
+.book-card .info .when{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--rose)}
+
+@media (max-width:1080px){.series-grid{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:680px){.series-grid{grid-template-columns:repeat(2,1fr)}.series-head{grid-template-columns:1fr}.series-head .meta{text-align:left}}
+
+</style>
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '353292');
+</script>
+<!-- End MailerLite Universal -->
+</head>
+<body>
+
+<!-- TOP STRIP -->
+<div class="top-strip">
+  <span>VOL. 04 · ISSUE 02 · SPRING 2026</span>
+  <div class="ticker"><div class="ticker-track">
+    <span>NEW SERIES — HEARTS OF SUGAR SPRINGS 1 — MAY 6</span>
+    <span>FREE READ — A BLOSSOMING LOVE</span>
+    <span>NEW SERIES — HEARTS OF SUGAR SPRINGS 1 — MAY 6</span>
+    <span>FREE READ — A BLOSSOMING LOVE</span>
+  </div></div>
+  <a href="mailto:bj@bjruffin.com">bj@bjruffin.com</a>
+</div>
+
+<!-- NAV -->
+<nav class="site">
+  <div class="nav-grid">
+    <div class="nav-left">
+      <a href="/library" class="nav-link">Library</a>
+      <a href="/my-story" class="nav-link">My Story</a>
+      <a href="/blog" class="nav-link">Blog</a>
+      <a href="/audiobooks" class="nav-link">Audiobooks <span style="opacity:.55;font-size:.78em;letter-spacing:.05em">(coming soon)</span></a>
+    </div>
+    <a href="/" class="brand" aria-label="BJ Ruffin Stories">
+      <svg viewBox="0 0 300 135" xmlns="http://www.w3.org/2000/svg">
+        <path class="chev" d="M126 33 L150 50 L174 33"></path>
+        <circle class="dot" cx="150" cy="40" r="4.5"></circle>
+        <line class="rule" x1="150" y1="50" x2="150" y2="60" stroke-width="1.2" opacity=".25"></line>
+        <text class="wordmark" x="150" y="93" text-anchor="middle">BJ Ruffin</text>
+        <line class="rule" x1="68" y1="102" x2="100" y2="102"></line>
+        <line class="rule" x1="200" y1="102" x2="232" y2="102"></line>
+        <text class="stories" x="150" y="118" text-anchor="middle">STORIES</text>
+      </svg>
+    </a>
+    <div class="nav-right">
+      <a href="/#newsletter" class="nav-link">Newsletter</a>
+      <a href="https://quiz.bjruffin.com/sf/67cf92ee" class="nav-link">Quiz</a>
+      <a href="https://dl.bookfunnel.com/5ak59tk5wf" class="nav-cta">Free Read</a>
+    </div>
+  </div>
+</nav>
+
+
+<section class="lib-hero reveal">
+  <div class="eyebrow">The Library · Vol. 04</div>
+  <h1>Every story <em>has its world.</em></h1>
+  <p class="lede">Two complete series, four worlds, and one promise — sweet, clean love stories with hard-won happy endings. Browse by series.</p>
+</section>
+
+<div class="lib-filters reveal" id="lib-filters">
+  <span class="label">Filter by</span>
+  <button type="button" class="chip active" data-filter="all">All Books</button>
+  <button type="button" class="chip" data-filter="hoss">Hearts of Sugar Springs</button>
+  <button type="button" class="chip" data-filter="ll">Love &amp; Legacy</button>
+  <button type="button" class="chip" data-filter="available">Available Now</button>
+  <button type="button" class="chip" data-filter="coming">Coming Soon</button>
+  <button type="button" class="chip" data-filter="audio">In Audio</button>
+</div>
+
+<!-- SERIES 1 -->
+<section class="series-block reveal" id="series-hoss" data-series="hoss">
+  <div class="series-head">
+    <div>
+      <span class="num">Series 01</span>
+      <h2>Hearts of <em>Sugar Springs</em></h2>
+    </div>
+    <div class="meta">
+      <div><b>06 Books</b> · Releasing bi-weekly</div>
+      <div>Sugar Springs, Montana</div>
+      <div>Ranch &amp; Small-Town Romance</div>
+    </div>
+  </div>
+  <div class="series-grid">
+    <!-- TODO: Replace cover with <img src="/images/covers/hoss-book1.jpg" alt="Hearts of Sugar Springs Book 1" loading="lazy"> -->
+    <a href="#" class="book-card b1" data-series="hoss" data-status="available">
+      <div class="cover"><img src="/images/covers/hoss-book1.jpg" alt="Hearts of Sugar Springs Book 1" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><span class="badge">Live</span><div class="cover-stamp">A Blossoming Love<strong>Book 01</strong></div></div>
+      <div class="info"><div class="num">No. 01</div><h3>A Blossoming <em>Love</em></h3><div class="when">May 6 · Live</div></div>
+    </a>
+    <!-- TODO: Replace cover with <img src="/images/covers/hoss-book2.jpg" alt="Hearts of Sugar Springs Book 2" loading="lazy"> -->
+    <a href="#" class="book-card b2" data-series="hoss" data-status="coming">
+      <div class="cover"><img src="/images/covers/hoss-book2.jpg" alt="Hearts of Sugar Springs Book 2" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><span class="badge coming">Soon</span><div class="cover-stamp">Book Two<strong>Book 02</strong></div></div>
+      <div class="info"><div class="num">No. 02</div><h3>Book Title <em>Two</em></h3><div class="when">Wk of May 20</div></div>
+    </a>
+    <!-- TODO: Replace cover with <img src="/images/covers/hoss-book3.jpg" alt="Hearts of Sugar Springs Book 3" loading="lazy"> -->
+    <a href="#" class="book-card b3" data-series="hoss" data-status="coming">
+      <div class="cover"><img src="/images/covers/hoss-book3.jpg" alt="Hearts of Sugar Springs Book 3" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><span class="badge coming">Soon</span><div class="cover-stamp">Book Three<strong>Book 03</strong></div></div>
+      <div class="info"><div class="num">No. 03</div><h3>Book Title <em>Three</em></h3><div class="when">Wk of June 3</div></div>
+    </a>
+    <!-- TODO: Replace cover with <img src="/images/covers/hoss-book4.jpg" alt="Hearts of Sugar Springs Book 4" loading="lazy"> -->
+    <a href="#" class="book-card b4" data-series="hoss" data-status="coming">
+      <div class="cover"><img src="/images/covers/hoss-book4.jpg" alt="Hearts of Sugar Springs Book 4" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><span class="badge coming">Soon</span><div class="cover-stamp">Book Four<strong>Book 04</strong></div></div>
+      <div class="info"><div class="num">No. 04</div><h3>Book Title <em>Four</em></h3><div class="when">Wk of June 17</div></div>
+    </a>
+    <!-- TODO: Replace cover with <img src="/images/covers/hoss-book5.jpg" alt="Hearts of Sugar Springs Book 5" loading="lazy"> -->
+    <a href="#" class="book-card b5" data-series="hoss" data-status="coming">
+      <div class="cover"><img src="/images/covers/hoss-book5.jpg" alt="Hearts of Sugar Springs Book 5" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><span class="badge coming">Soon</span><div class="cover-stamp">Book Five<strong>Book 05</strong></div></div>
+      <div class="info"><div class="num">No. 05</div><h3>Book Title <em>Five</em></h3><div class="when">Wk of July 1</div></div>
+    </a>
+    <!-- TODO: Replace cover with <img src="/images/covers/hoss-book6.jpg" alt="Hearts of Sugar Springs Book 6" loading="lazy"> -->
+    <a href="#" class="book-card b6" data-series="hoss" data-status="coming">
+      <div class="cover"><img src="/images/covers/hoss-book6.jpg" alt="Hearts of Sugar Springs Book 6" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><span class="badge coming">Soon</span><div class="cover-stamp">Book Six<strong>Book 06</strong></div></div>
+      <div class="info"><div class="num">No. 06</div><h3>Book Title <em>Six</em></h3><div class="when">Wk of July 15</div></div>
+    </a>
+  </div>
+</section>
+
+<!-- SERIES 2 -->
+<section class="series-block reveal" id="series-ll" data-series="ll">
+  <div class="series-head">
+    <div>
+      <span class="num">Series 02</span>
+      <h2>Love &amp; <em>Legacy</em></h2>
+    </div>
+    <div class="meta">
+      <div><b>06 Books</b> · Complete series</div>
+      <div>Vermont Mountains</div>
+      <div>Family Values &amp; Second Chances</div>
+    </div>
+  </div>
+  <div class="series-grid">
+    <!-- TODO: Replace cover with <img src="/images/covers/ll-book1.jpg" alt="Love and Legacy Book 1" loading="lazy"> -->
+
+    <a href="#TODO-amazon-ll-book1" title="TODO: Insert Amazon link for L&amp;L Book 1" class="book-card b3" data-series="ll" data-status="available"><div class="cover"><img src="/images/covers/ll-book1.jpg" alt="Love and Legacy Book 1" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><div class="cover-stamp">Book One<strong>Book 01</strong></div></div><div class="info"><div class="num">No. 01</div><h3>The Inn at Maple <em>Grove</em></h3><div class="when">Out now</div></div></a>
+    <!-- TODO: Replace cover with <img src="/images/covers/ll-book2.jpg" alt="Love and Legacy Book 2" loading="lazy"> -->
+
+    <a href="#TODO-amazon-ll-book2" title="TODO: Insert Amazon link for L&amp;L Book 2" class="book-card b4" data-series="ll" data-status="available"><div class="cover"><img src="/images/covers/ll-book2.jpg" alt="Love and Legacy Book 2" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><div class="cover-stamp">Book Two<strong>Book 02</strong></div></div><div class="info"><div class="num">No. 02</div><h3>Something Worth <em>Staying For</em></h3><div class="when">Out now</div></div></a>
+    <!-- TODO: Replace cover with <img src="/images/covers/ll-book3.jpg" alt="Love and Legacy Book 3" loading="lazy"> -->
+
+    <a href="https://www.amazon.com/Love-Legacy-Saving-Maple-Grove-ebook/dp/B0D5BV4Z7W/" class="book-card b1" data-series="ll" data-status="available"><div class="cover"><img src="/images/covers/ll-book3.jpg" alt="Love and Legacy Book 3" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><div class="cover-stamp">Book Three<strong>Book 03</strong></div></div><div class="info"><div class="num">No. 03</div><h3>Between Us and <em>the Truth</em></h3><div class="when">Out now</div></div></a>
+    <!-- TODO: Replace cover with <img src="/images/covers/ll-book4.jpg" alt="Love and Legacy Book 4" loading="lazy"> -->
+
+    <a href="#TODO-amazon-ll-book4" title="TODO: Insert Amazon link for L&amp;L Book 4" class="book-card b6" data-series="ll" data-status="available"><div class="cover"><img src="/images/covers/ll-book4.jpg" alt="Love and Legacy Book 4" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><div class="cover-stamp">Book Four<strong>Book 04</strong></div></div><div class="info"><div class="num">No. 04</div><h3>Hold <em>On</em></h3><div class="when">Out now</div></div></a>
+    <!-- TODO: Replace cover with <img src="/images/covers/ll-book5.jpg" alt="Love and Legacy Book 5" loading="lazy"> -->
+
+    <a href="#TODO-amazon-ll-book5" title="TODO: Insert Amazon link for L&amp;L Book 5" class="book-card b5" data-series="ll" data-status="available"><div class="cover"><img src="/images/covers/ll-book5.jpg" alt="Love and Legacy Book 5" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><div class="cover-stamp">Book Five<strong>Book 05</strong></div></div><div class="info"><div class="num">No. 05</div><h3>After the <em>Fire</em></h3><div class="when">Out now</div></div></a>
+    <!-- TODO: Replace cover with <img src="/images/covers/ll-book6.jpg" alt="Love and Legacy Book 6" loading="lazy"> -->
+
+    <a href="#TODO-amazon-ll-book6" title="TODO: Insert Amazon link for L&amp;L Book 6" class="book-card b2" data-series="ll" data-status="available"><div class="cover"><img src="/images/covers/ll-book6.jpg" alt="Love and Legacy Book 6" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><div class="cover-stamp">Book Six<strong>Book 06</strong></div></div><div class="info"><div class="num">No. 06</div><h3>Maple in <em>Bloom</em></h3><div class="when">Out now</div></div></a>
+  </div>
+</section>
+
+<section class="series-block reveal" id="series-coming" data-series="coming" style="border-bottom:none">
+  <div class="series-head">
+    <div>
+      <span class="num">In development</span>
+      <h2>More <em>worlds</em> to come.</h2>
+    </div>
+    <div class="meta">
+      <div><b>Jazz &amp; City Nights</b></div>
+      <div><b>The Flower Shop</b></div>
+      <div>Both coming soon</div>
+    </div>
+  </div>
+  <p style="font-family:var(--serif);font-style:italic;font-size:20px;color:var(--ink-soft);max-width:720px;line-height:1.5">Two more worlds are taking shape — velvet booths and smoky melodies in the city, and a small flower shop where love grows when you least expect it. Join the newsletter to know the moment they bloom.</p>
+  <div style="margin-top:32px"><a href="/#newsletter" class="btn btn-primary">Get notified <span class="arrow">→</span></a></div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div>
+      <div class="foot-brand">
+        <svg viewBox="0 0 300 135" xmlns="http://www.w3.org/2000/svg" style="height:80px;width:auto;display:block">
+          <path d="M126 33 L150 50 L174 33" stroke="#DCA1A8" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+          <circle cx="150" cy="40" r="4.5" fill="#DCA1A8" opacity="0.5"></circle>
+          <line x1="150" y1="50" x2="150" y2="60" stroke="#DCA1A8" stroke-width="1.2" opacity="0.3"></line>
+          <text x="150" y="93" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="38" font-weight="400" fill="#FBF7F2" letter-spacing="3">BJ Ruffin</text>
+          <line x1="68" y1="102" x2="100" y2="102" stroke="#DCA1A8" stroke-width="0.8" opacity="0.4"></line>
+          <line x1="200" y1="102" x2="232" y2="102" stroke="#DCA1A8" stroke-width="0.8" opacity="0.4"></line>
+          <text x="150" y="118" text-anchor="middle" font-family="DM Mono, monospace" font-size="11" fill="#DCA1A8" letter-spacing="8" font-weight="400">STORIES</text>
+        </svg>
+      </div>
+      <p class="foot-desc">Sweet, clean romances about love, family, and the resilience of the human spirit — from the mountains of Vermont to the ranches of Sugar Springs.</p>
+      <div class="foot-social">
+        <a href="https://instagram.com/bjruffinauthor?igshid=MzNlNGNkZWQ4Mg==" target="_blank" rel="noopener" aria-label="Instagram">Ig</a>
+        <a href="https://www.facebook.com/bjruffinromance/" target="_blank" rel="noopener" aria-label="Facebook">Fb</a>
+        <a href="https://pin.it/5ar5LzB8l" target="_blank" rel="noopener" aria-label="Pinterest">Pt</a>
+        <a href="https://www.goodreads.com/author/show/49152576.B_J_Ruffin" target="_blank" rel="noopener" aria-label="Goodreads">Gr</a>
+      </div>
+    </div>
+    <div class="foot-col">
+      <h5>Navigate</h5>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/my-story">My Story</a></li>
+        <li><a href="/library">Library</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/audiobooks">Audiobooks</a></li>
+        <li><a href="/#newsletter">Newsletter</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Shop</h5>
+      <ul>
+        <li><a href="https://www.amazon.com/author/bjruffinstories">Amazon Store</a></li>
+        <li><a href="#TODO-payhip-store" title="TODO: Insert Payhip store URL">Payhip Store</a></li>
+        <li><a href="https://dl.bookfunnel.com/5ak59tk5wf">Free Read</a></li>
+        <li><a href="https://quiz.bjruffin.com/sf/67cf92ee">Take the Quiz</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Connect</h5>
+      <ul>
+        <li><a href="mailto:bj@bjruffin.com">bj@bjruffin.com</a></li>
+        <li><a href="#">Charlotte, NC</a></li>
+        </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 BJ Ruffin · All rights reserved</span>
+    <span><a href="https://www.freeprivacypolicy.com/live/c646f873-2a65-494b-8584-55ae36ba83bc" target="_blank" rel="noopener">Privacy</a></span>
+  </div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(
+    (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); }),
+    { threshold: 0.08 }
+  );
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+
+<style>
+  .lib-filters .chip{cursor:pointer;background:transparent;font:inherit;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:7px 14px;border:1px solid var(--rule);border-radius:999px;color:var(--ink-soft);transition:all .25s}
+  .book-card[hidden],.series-block[hidden]{display:none !important}
+</style>
+<script>
+  (function(){
+    var chips = document.querySelectorAll('#lib-filters .chip');
+    var cards = document.querySelectorAll('.book-card');
+    var sections = {
+      hoss: document.getElementById('series-hoss'),
+      ll: document.getElementById('series-ll'),
+      coming: document.getElementById('series-coming')
+    };
+    function showAll(){
+      Object.values(sections).forEach(function(el){ if(el) el.hidden = false; });
+      cards.forEach(function(c){ c.hidden = false; });
+    }
+    function applyFilter(f){
+      if(f === 'audio'){ window.location.href = '/audiobooks'; return; }
+      showAll();
+      if(f === 'all'){
+        if(sections.hoss) sections.hoss.scrollIntoView({behavior:'smooth',block:'start'});
+        return;
+      }
+      if(f === 'hoss'){
+        sections.ll && (sections.ll.hidden = true);
+        sections.coming && (sections.coming.hidden = true);
+        sections.hoss && sections.hoss.scrollIntoView({behavior:'smooth',block:'start'});
+        return;
+      }
+      if(f === 'll'){
+        sections.hoss && (sections.hoss.hidden = true);
+        sections.coming && (sections.coming.hidden = true);
+        sections.ll && sections.ll.scrollIntoView({behavior:'smooth',block:'start'});
+        return;
+      }
+      if(f === 'available'){
+        sections.coming && (sections.coming.hidden = true);
+        cards.forEach(function(c){
+          if(c.dataset.status !== 'available') c.hidden = true;
+        });
+        sections.hoss && sections.hoss.scrollIntoView({behavior:'smooth',block:'start'});
+        return;
+      }
+      if(f === 'coming'){
+        sections.hoss && (sections.hoss.hidden = true);
+        sections.ll && (sections.ll.hidden = true);
+        sections.coming && sections.coming.scrollIntoView({behavior:'smooth',block:'start'});
+        return;
+      }
+    }
+    chips.forEach(function(chip){
+      chip.addEventListener('click', function(){
+        chips.forEach(function(c){ c.classList.remove('active'); });
+        chip.classList.add('active');
+        applyFilter(chip.dataset.filter);
+      });
+    });
+  })();
+</script>
+</body>
+</html>

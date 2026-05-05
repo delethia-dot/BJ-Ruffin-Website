@@ -1,0 +1,93 @@
+<!--
+  =====================================================================
+  BJ RUFFIN STORIES — Newsletter Header Block
+  =====================================================================
+  HOW TO USE IN MAILERLITE:
+    1. In your campaign editor, add an "HTML" block at the top.
+    2. Copy everything between the START and END markers below
+       (the <table>...</table> block) and paste into the HTML block.
+    3. Edit the volume/issue/date in the eyebrow line each issue.
+
+  WHY IT'S TABLE-BASED:
+    Email clients (especially Outlook on Windows) ignore flexbox/grid
+    and many modern CSS features. Tables with inline CSS render
+    consistently across Gmail, Apple Mail, Outlook, and Yahoo.
+
+  EDIT POINTS (look for "EDIT:" comments below):
+    - Volume/Issue/Month line
+    - Optional sub-eyebrow (or remove)
+  =====================================================================
+-->
+
+<!-- =================== START — paste from here =================== -->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+       style="background:#F8F2EC;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">
+  <tr>
+    <td align="center" style="padding:0;">
+
+      <!-- Outer wrapper: locked to 600px max -->
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0"
+             style="width:600px;max-width:600px;background:#F8F2EC;">
+
+        <!-- Top plum strip with issue line -->
+        <tr>
+          <td align="center" bgcolor="#5A2F3A"
+              style="background:#5A2F3A;padding:10px 24px;
+                     font-family:'DM Mono',ui-monospace,Menlo,Consolas,monospace;
+                     font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+                     color:#E6C2C7;line-height:1.4;">
+            <!-- EDIT: change volume/issue/month each newsletter -->
+            VOL. 04 · ISSUE 02 · SPRING 2026
+          </td>
+        </tr>
+
+        <!-- Brand wordmark on ivory background — logo PNG -->
+        <tr>
+          <td align="center" bgcolor="#FBF7F2"
+              style="background:#FBF7F2;padding:32px 24px 24px;">
+            <!--
+              EDIT: replace src with your hosted logo URL.
+              Once deployed, this will be: https://bjruffin.com/images/newsletter/logo.png
+              Until then, upload images/newsletter/logo.png to MailerLite's image library
+              and paste that URL here.
+            -->
+            <a href="https://bjruffin.com" style="text-decoration:none;border:0;outline:0;">
+              <img src="https://bjruffin.com/images/newsletter/logo.png"
+                   alt="BJ Ruffin Stories"
+                   width="280" height="117"
+                   style="display:block;width:280px;height:auto;border:0;outline:0;
+                          margin:0 auto;-ms-interpolation-mode:bicubic;">
+            </a>
+          </td>
+        </tr>
+
+        <!-- Subtle rose divider -->
+        <tr>
+          <td bgcolor="#FBF7F2" style="background:#FBF7F2;padding:0 32px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td style="border-bottom:1px solid #E6C2C7;height:1px;font-size:0;line-height:0;">&nbsp;</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Optional eyebrow line (delete this <tr> block if not needed for an issue) -->
+        <tr>
+          <td align="center" bgcolor="#FBF7F2"
+              style="background:#FBF7F2;padding:18px 24px 24px;
+                     font-family:'DM Mono',ui-monospace,Menlo,Consolas,monospace;
+                     font-size:11px;letter-spacing:.3em;text-transform:uppercase;
+                     color:#C58892;line-height:1.4;">
+            <!-- EDIT: change to "The Editor's Letter", "New Release", "Behind the Scenes", etc. -->
+            The Editor's Letter
+          </td>
+        </tr>
+
+      </table>
+      <!-- End outer wrapper -->
+
+    </td>
+  </tr>
+</table>
+<!-- =================== END — paste through here ================== -->

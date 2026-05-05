@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BJ Ruffin — Sweet Romance That Takes You Places</title>
+<meta name="description" content="Sweet, clean romance from BJ Ruffin — Hearts of Sugar Springs, Love &amp; Legacy, and more. Slow burns, soft landings, and always a happy ever after.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Editorial Rose palette — dusky rose, plum, ivory, ink */
+    --paper:#F8F2EC;
+    --paper-warm:#F1E7DD;
+    --ivory:#FBF7F2;
+    --rose:#C58892;
+    --rose-soft:#E6C2C7;
+    --rose-tint:#F2DDE0;
+    --plum:#5A2F3A;
+    --plum-deep:#3D1F27;
+    --ink:#1F1A1B;
+    --ink-soft:#564B4D;
+    --ink-faint:#8B7F81;
+    --rule:rgba(90,47,58,0.14);
+    --rule-soft:rgba(90,47,58,0.07);
+
+    --serif:'Fraunces',Georgia,serif;
+    --sans:'DM Sans',-apple-system,sans-serif;
+    --mono:'DM Mono',ui-monospace,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--sans);
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+
+  /* ─── TOP STRIP ─────────────────────────────────────── */
+  .top-strip{
+    background:var(--plum);
+    color:var(--rose-soft);
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    padding:9px 32px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .top-strip span{opacity:.75}
+  .top-strip a{color:var(--rose-soft);border-bottom:1px solid rgba(230,194,199,.4);padding-bottom:1px}
+  .top-strip a:hover{color:#fff;border-color:#fff}
+  .ticker{display:flex;gap:32px;overflow:hidden}
+  .ticker-track{display:flex;gap:32px;animation:tick 38s linear infinite}
+  @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* ─── NAV ────────────────────────────────────────────── */
+  nav.site{
+    position:sticky;top:0;z-index:50;
+    background:rgba(248,242,236,.92);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--rule);
+  }
+  .nav-grid{
+    max-width:1440px;margin:0 auto;
+    padding:18px 32px;
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:center;
+    gap:24px;
+  }
+  .nav-left,.nav-right{display:flex;gap:28px;align-items:center}
+  .nav-right{justify-content:flex-end}
+  .nav-grid a.nav-link{
+    font-family:var(--sans);
+    font-size:13px;
+    font-weight:500;
+    color:var(--ink);
+    letter-spacing:.02em;
+    position:relative;
+  }
+  .nav-grid a.nav-link::after{
+    content:'';position:absolute;left:0;right:0;bottom:-6px;
+    height:1px;background:var(--plum);
+    transform:scaleX(0);transform-origin:left;
+    transition:transform .35s cubic-bezier(.7,0,.3,1);
+  }
+  .nav-grid a.nav-link:hover::after{transform:scaleX(1)}
+  .brand{
+    display:inline-flex;align-items:center;justify-content:center;
+    line-height:0;
+  }
+  .brand svg{height:64px;width:auto;display:block}
+  .brand .wordmark{
+    font-family:var(--serif);
+    font-size:32px;
+    font-weight:400;
+    letter-spacing:.04em;
+    fill:var(--ink);
+  }
+  .brand .stories{
+    font-family:var(--mono);
+    font-size:9.5px;
+    letter-spacing:.55em;
+    fill:var(--rose);
+    text-transform:uppercase;
+  }
+  .brand .chev{stroke:var(--rose);stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .brand .dot{fill:var(--rose);opacity:.5}
+  .brand .rule{stroke:var(--rose);stroke-width:.8;opacity:.35}
+  .nav-cta{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--plum);
+    border:1px solid var(--plum);
+    padding:8px 14px;
+    border-radius:999px;
+    transition:all .3s;
+  }
+  .nav-cta:hover{background:var(--plum);color:var(--paper)}
+
+  /* ─── HERO ───────────────────────────────────────────── */
+  .hero{
+    padding:80px 32px 100px;
+    position:relative;
+  }
+  .hero-grid{
+    max-width:1440px;margin:0 auto;
+    display:grid;
+    grid-template-columns:1.1fr 1fr;
+    gap:80px;
+    align-items:end;
+  }
+  .hero-issue{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    color:var(--rose);
+    margin-bottom:28px;
+    display:flex;
+    gap:14px;
+    align-items:center;
+  }
+  .hero-issue::before{
+    content:'';width:28px;height:1px;background:var(--rose);
+  }
+  h1.hero-title{
+    font-family:var(--serif);
+    font-size:clamp(56px,7.6vw,116px);
+    font-weight:300;
+    line-height:.94;
+    letter-spacing:-.025em;
+    color:var(--ink);
+    font-variation-settings:"opsz" 144;
+  }
+  h1.hero-title em{
+    font-style:italic;
+    color:var(--plum);
+    font-weight:400;
+  }
+  h1.hero-title .underline-word{
+    position:relative;display:inline-block;
+  }
+  h1.hero-title .underline-word::after{
+    content:'';position:absolute;left:0;right:0;bottom:.05em;
+    height:.12em;background:var(--rose-soft);
+    z-index:-1;
+  }
+  .hero-meta{
+    display:flex;flex-direction:column;gap:32px;
+    padding-bottom:8px;
+  }
+  .hero-meta p.lede{
+    font-family:var(--serif);
+    font-size:21px;
+    font-weight:300;
+    line-height:1.45;
+    color:var(--ink-soft);
+    font-style:italic;
+    max-width:440px;
+  }
+  .hero-meta-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px 32px;
+    padding-top:24px;
+    border-top:1px solid var(--rule);
+  }
+  .meta-row dt{
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin-bottom:6px;
+  }
+  .meta-row dd{
+    font-family:var(--serif);
+    font-size:18px;
+    color:var(--ink);
+    font-weight:400;
+  }
+  .hero-actions{
+    display:flex;gap:14px;flex-wrap:wrap;
+    margin-top:8px;
+  }
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:14px 24px;
+    font-family:var(--sans);
+    font-size:13px;
+    font-weight:500;
+    letter-spacing:.04em;
+    border-radius:999px;
+    transition:all .3s cubic-bezier(.7,0,.3,1);
+    cursor:pointer;
+    border:1px solid transparent;
+  }
+  .btn-primary{background:var(--plum);color:var(--paper)}
+  .btn-primary:hover{background:var(--plum-deep);transform:translateY(-1px)}
+  .btn-ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+  .btn-ghost:hover{border-color:var(--plum);background:var(--ivory)}
+  .btn .arrow{transition:transform .3s}
+  .btn:hover .arrow{transform:translateX(3px)}
+
+  /* Hero side art */
+  .hero-art{
+    position:relative;
+    aspect-ratio:4/5;
+    border-radius:4px;
+    overflow:hidden;
+    background:linear-gradient(180deg,var(--rose-tint),var(--paper-warm));
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 30px 80px -30px rgba(90,47,58,.25);
+  }
+  .hero-art-stripes{
+    position:absolute;inset:0;
+    background-image:repeating-linear-gradient(135deg,transparent 0,transparent 18px,rgba(90,47,58,.04) 18px,rgba(90,47,58,.04) 19px);
+  }
+  .hero-art-label{
+    position:relative;z-index:2;
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.25em;
+    color:var(--plum);
+    text-transform:uppercase;
+    text-align:center;
+    padding:12px 18px;
+    background:var(--ivory);
+    border:1px solid var(--rule);
+  }
+  .hero-art-label small{
+    display:block;
+    color:var(--ink-faint);
+    margin-top:4px;
+    letter-spacing:.18em;
+    font-size:9px;
+  }
+  .hero-art-tag{
+    position:absolute;
+    top:24px;left:24px;
+    background:var(--plum);
+    color:var(--rose-tint);
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.25em;
+    text-transform:uppercase;
+    padding:8px 14px;
+    border-radius:999px;
+    z-index:2;
+  }
+  .hero-art-caption{
+    position:absolute;bottom:24px;left:24px;right:24px;
+    z-index:2;
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:14px;
+    color:var(--plum);
+    line-height:1.4;
+  }
+
+  /* Hero numerals */
+  .hero-numbers{
+    max-width:1440px;margin:60px auto 0;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+  }
+  .hero-numbers > div{
+    padding:28px 24px;
+    border-right:1px solid var(--rule);
+    display:flex;flex-direction:column;gap:6px;
+  }
+  .hero-numbers > div:last-child{border-right:none}
+  .num-val{
+    font-family:var(--serif);
+    font-size:36px;
+    font-weight:300;
+    color:var(--plum);
+    font-variation-settings:"opsz" 144;
+    letter-spacing:-.02em;
+  }
+  .num-val em{font-style:italic;color:var(--rose)}
+  .num-label{
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+  }
+
+  /* ─── FEATURE ARTICLE — NEW SERIES ──────────────────── */
+  .feature{
+    background:var(--ivory);
+    padding:120px 32px;
+    position:relative;
+    border-top:1px solid var(--rule);
+  }
+  .feature-inner{
+    max-width:1440px;margin:0 auto;
+    display:grid;
+    grid-template-columns:1fr 1.2fr;
+    gap:80px;
+    align-items:center;
+  }
+  .feature-info .section-tag{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    color:var(--rose);
+    margin-bottom:24px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .feature-info .section-tag::before{
+    content:'';width:28px;height:1px;background:var(--rose);
+  }
+  .feature h2{
+    font-family:var(--serif);
+    font-size:clamp(40px,5vw,68px);
+    font-weight:300;
+    line-height:1;
+    letter-spacing:-.02em;
+    color:var(--ink);
+    margin-bottom:16px;
+    font-variation-settings:"opsz" 144;
+  }
+  .feature h2 em{
+    font-style:italic;color:var(--plum);font-weight:400;
+  }
+  .feature .tagline{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:20px;
+    color:var(--rose);
+    margin-bottom:32px;
+  }
+  .feature .desc{
+    font-size:15px;
+    line-height:1.7;
+    color:var(--ink-soft);
+    max-width:480px;
+    margin-bottom:36px;
+  }
+  .release-schedule{
+    border-top:1px solid var(--rule);
+    padding-top:28px;
+    margin-bottom:36px;
+  }
+  .schedule-head{
+    display:flex;justify-content:space-between;align-items:baseline;
+    margin-bottom:18px;
+  }
+  .schedule-head h4{
+    font-family:var(--mono);
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink);font-weight:500;
+  }
+  .schedule-head span{
+    font-family:var(--mono);font-size:10px;letter-spacing:.2em;
+    color:var(--ink-faint);text-transform:uppercase;
+  }
+  .schedule-list{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:0;
+  }
+  .schedule-item{
+    padding:14px 8px;
+    border-left:1px solid var(--rule-soft);
+    text-align:center;
+  }
+  .schedule-item:first-child{border-left:none}
+  .schedule-item .si-num{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:22px;
+    color:var(--plum);
+    font-weight:400;
+    margin-bottom:4px;
+  }
+  .schedule-item .si-when{
+    font-family:var(--mono);
+    font-size:9px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    white-space:nowrap;
+  }
+  .schedule-item.live{
+    background:var(--rose-tint);
+    border-radius:4px;
+    border-left:none;
+  }
+  .schedule-item.live .si-when{color:var(--plum);font-weight:500}
+  .schedule-item.live + .schedule-item{border-left:none}
+
+  /* Book stack */
+  .book-stack{
+    position:relative;
+    aspect-ratio:5/4;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    padding:20px;
+  }
+  .book-stack .book{
+    position:relative;
+    width:19%;
+    aspect-ratio:5/8;
+    border-radius:3px;
+    overflow:hidden;
+    background:var(--rose-soft);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.4) inset,
+      0 30px 50px -20px rgba(90,47,58,.35),
+      0 8px 16px -6px rgba(90,47,58,.18);
+    display:flex;
+    align-items:center;justify-content:center;
+    transition:transform .5s cubic-bezier(.7,0,.3,1),box-shadow .5s;
+    cursor:pointer;
+    margin-left:-3%;
+  }
+  .book-stack .book:first-child{margin-left:0}
+  .book-stack .book:nth-child(1){transform:rotate(-10deg) translateY(28px);background:linear-gradient(160deg,#E6C2C7,#C58892);z-index:1}
+  .book-stack .book:nth-child(2){transform:rotate(-6deg)  translateY(14px);background:linear-gradient(160deg,#D9A8AE,#A86870);z-index:2}
+  .book-stack .book:nth-child(3){transform:rotate(-2deg)  translateY(-2px);background:linear-gradient(160deg,#5A2F3A,#3D1F27);z-index:5}
+  .book-stack .book:nth-child(4){transform:rotate(2deg)   translateY(-2px);background:linear-gradient(160deg,#5A2F3A,#3D1F27);z-index:5}
+  .book-stack .book:nth-child(5){transform:rotate(6deg)   translateY(14px);background:linear-gradient(160deg,#D9A8AE,#A86870);z-index:2}
+  .book-stack .book:nth-child(6){transform:rotate(10deg)  translateY(28px);background:linear-gradient(160deg,#E6C2C7,#C58892);z-index:1}
+  .book-stack .book:hover{
+    transform:rotate(0deg) translateY(-30px) scale(1.08);
+    z-index:10;
+  }
+  .book-stack .book .spine-detail{
+    position:absolute;inset:8% 12%;
+    border:1px solid rgba(255,255,255,.25);
+    border-radius:1px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .book-stack .book .spine-title{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:11px;
+    color:rgba(255,255,255,.85);
+    text-align:center;
+    padding:8px;
+    line-height:1.3;
+  }
+  .book-stack .book:nth-child(3) .spine-title,
+  .book-stack .book:nth-child(4) .spine-title{color:#F2DDE0}
+
+  /* ─── QUIZ STRIP ─────────────────────────────────────── */
+  .quiz-band{
+    background:var(--plum);
+    color:var(--rose-tint);
+    padding:36px 32px;
+    overflow:hidden;
+    position:relative;
+  }
+  .quiz-band-inner{
+    max-width:1440px;margin:0 auto;
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    gap:32px;
+    align-items:center;
+  }
+  .quiz-eyebrow{
+    font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--rose-soft);
+  }
+  .quiz-band h3{
+    font-family:var(--serif);
+    font-size:clamp(22px,2.4vw,32px);
+    font-style:italic;
+    font-weight:300;
+    color:var(--paper);
+    line-height:1.2;
+  }
+  .quiz-band h3 em{color:var(--rose);font-style:normal}
+  .btn-quiz{
+    background:var(--rose);
+    color:var(--plum-deep);
+    border-radius:999px;
+    padding:16px 28px;
+    font-family:var(--sans);
+    font-weight:600;
+    font-size:13px;
+    letter-spacing:.04em;
+    display:inline-flex;align-items:center;gap:10px;
+    transition:all .3s;
+    white-space:nowrap;
+  }
+  .btn-quiz:hover{background:var(--rose-soft);transform:translateY(-1px)}
+
+  /* ─── WORLDS ────────────────────────────────────────── */
+  .worlds{
+    padding:120px 32px;
+    background:var(--paper);
+  }
+  .worlds-inner{max-width:1440px;margin:0 auto}
+  .worlds-head{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    align-items:end;
+    margin-bottom:64px;
+    padding-bottom:32px;
+    border-bottom:1px solid var(--rule);
+  }
+  .worlds-head .section-tag{
+    font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--rose);margin-bottom:16px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .worlds-head .section-tag::before{content:'';width:28px;height:1px;background:var(--rose)}
+  .worlds-head h2{
+    font-family:var(--serif);
+    font-size:clamp(48px,5.4vw,84px);
+    font-weight:300;
+    line-height:.95;
+    letter-spacing:-.02em;
+    color:var(--ink);
+    font-variation-settings:"opsz" 144;
+  }
+  .worlds-head h2 em{font-style:italic;color:var(--plum);font-weight:400}
+  .worlds-head p{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:19px;
+    color:var(--ink-soft);
+    line-height:1.5;
+    max-width:440px;
+    justify-self:end;
+  }
+  .worlds-grid{
+    display:grid;
+    grid-template-columns:repeat(12,1fr);
+    gap:24px;
+  }
+  .world{
+    border-radius:6px;
+    overflow:hidden;
+    position:relative;
+    padding:36px 32px;
+    min-height:380px;
+    display:flex;flex-direction:column;justify-content:space-between;
+    cursor:pointer;
+    transition:transform .5s cubic-bezier(.7,0,.3,1);
+  }
+  .world:hover{transform:translateY(-6px)}
+  .world.w1{grid-column:span 7;background:linear-gradient(160deg,#E8DCC9 0%,#C9AC85 100%)}
+  .world.w2{grid-column:span 5;background:linear-gradient(160deg,#D9DFE0 0%,#9DB4B8 100%)}
+  .world.w3{grid-column:span 5;background:linear-gradient(160deg,#1F1A1B 0%,#3D1F27 100%);color:var(--paper)}
+  .world.w4{grid-column:span 7;background:linear-gradient(160deg,#F2DDE0 0%,#D6A6AD 100%)}
+  .world-num{
+    font-family:var(--serif);
+    font-size:14px;
+    font-style:italic;
+    color:rgba(31,26,27,.5);
+  }
+  .world.w3 .world-num{color:rgba(242,221,224,.55)}
+  .world-tag{
+    display:inline-block;
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    padding:5px 12px;
+    border-radius:999px;
+    background:rgba(255,255,255,.5);
+    color:var(--plum);
+    align-self:flex-start;
+  }
+  .world.w3 .world-tag{background:rgba(230,194,199,.18);color:var(--rose-soft)}
+  .world h3{
+    font-family:var(--serif);
+    font-size:clamp(24px,2.6vw,36px);
+    font-weight:400;
+    line-height:1.05;
+    letter-spacing:-.01em;
+    margin:18px 0 14px;
+    max-width:90%;
+    font-variation-settings:"opsz" 144;
+  }
+  .world h3 em{font-style:italic}
+  .world p{
+    font-size:14px;
+    line-height:1.6;
+    color:var(--ink-soft);
+    max-width:380px;
+    margin-bottom:auto;
+  }
+  .world.w3 p{color:rgba(242,221,224,.7)}
+  .world-foot{
+    display:flex;justify-content:space-between;align-items:center;
+    padding-top:24px;
+    margin-top:24px;
+    border-top:1px solid rgba(31,26,27,.12);
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+  }
+  .world.w3 .world-foot{border-color:rgba(242,221,224,.18)}
+  .world-foot a{
+    color:var(--plum);
+    border-bottom:1px solid transparent;
+    transition:border-color .3s;
+  }
+  .world.w3 .world-foot a{color:var(--rose)}
+  .world:hover .world-foot a{border-color:currentColor}
+  .world-foot .count{color:rgba(31,26,27,.5)}
+  .world.w3 .world-foot .count{color:rgba(242,221,224,.5)}
+
+  /* ─── ALSO BY — Love & Legacy ─────────────────────────── */
+  .also{
+    padding:120px 32px;
+    background:var(--paper-warm);
+    border-top:1px solid var(--rule);
+  }
+  .also-inner{max-width:1440px;margin:0 auto}
+  .also-head{
+    display:grid;
+    grid-template-columns:.8fr 1.2fr;
+    gap:80px;
+    align-items:start;
+    padding-bottom:48px;
+    border-bottom:1px solid var(--rule);
+    margin-bottom:60px;
+  }
+  .also-head .label{
+    font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--rose);margin-bottom:20px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .also-head .label::before{content:'';width:28px;height:1px;background:var(--rose)}
+  .also-head h2{
+    font-family:var(--serif);
+    font-size:clamp(40px,4.6vw,64px);
+    font-weight:300;
+    line-height:1;
+    letter-spacing:-.02em;
+    color:var(--ink);
+    font-variation-settings:"opsz" 144;
+    margin-bottom:8px;
+  }
+  .also-head h2 em{font-style:italic;color:var(--plum);font-weight:400}
+  .also-head .place{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:20px;
+    color:var(--rose);
+  }
+  .also-head .meta-pill{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    border:1px solid var(--rule);
+    padding:6px 12px;
+    border-radius:999px;
+    display:inline-block;
+    margin-bottom:20px;
+  }
+  .also-head p{
+    font-size:15px;
+    line-height:1.75;
+    color:var(--ink-soft);
+    max-width:560px;
+    margin-bottom:28px;
+  }
+  .also-head .row-actions{display:flex;gap:12px;flex-wrap:wrap}
+
+  .also-books{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:24px;
+    margin-bottom:48px;
+  }
+  .ab{
+    text-decoration:none;
+    color:inherit;
+    transition:transform .35s;
+  }
+  .ab:hover{transform:translateY(-6px)}
+  .ab-cover{
+    aspect-ratio:5/8;
+    border-radius:3px;
+    overflow:hidden;
+    background:linear-gradient(160deg,var(--rose-soft),var(--rose));
+    box-shadow:0 18px 40px -18px rgba(90,47,58,.35),0 4px 10px -4px rgba(90,47,58,.15);
+    margin-bottom:14px;
+    display:flex;align-items:center;justify-content:center;
+    position:relative;
+  }
+  .ab-cover::before{
+    content:'';position:absolute;inset:8% 10%;
+    border:1px solid rgba(255,255,255,.25);
+    border-radius:1px;
+  }
+  .ab-cover .cnum{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:30px;
+    color:rgba(255,255,255,.85);
+  }
+  .ab-meta{
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin-bottom:4px;
+  }
+  .ab-title{
+    font-family:var(--serif);
+    font-size:14px;
+    color:var(--ink);
+    line-height:1.3;
+  }
+
+  /* alternating cover hues for variety */
+  .ab:nth-child(2) .ab-cover{background:linear-gradient(160deg,#D9A8AE,#A86870)}
+  .ab:nth-child(3) .ab-cover{background:linear-gradient(160deg,#5A2F3A,#3D1F27)}
+  .ab:nth-child(4) .ab-cover{background:linear-gradient(160deg,#E6C2C7,#C58892)}
+  .ab:nth-child(5) .ab-cover{background:linear-gradient(160deg,#C9AC85,#9C7E5C)}
+  .ab:nth-child(6) .ab-cover{background:linear-gradient(160deg,#A86870,#5A2F3A)}
+
+  .boxset{
+    background:var(--ivory);
+    border:1px solid var(--rule);
+    border-radius:6px;
+    padding:32px 36px;
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    gap:32px;
+    align-items:center;
+  }
+  .boxset-art{
+    width:64px;height:64px;
+    border-radius:4px;
+    background:linear-gradient(135deg,var(--plum),var(--rose));
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-style:italic;color:var(--paper);
+    font-size:24px;
+  }
+  .boxset h4{
+    font-family:var(--serif);
+    font-size:22px;
+    font-weight:400;
+    color:var(--ink);
+    margin-bottom:4px;
+  }
+  .boxset p{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+  }
+  .boxset-actions{display:flex;gap:10px}
+
+  /* ─── CAPTURE CARDS ──────────────────────────────────── */
+  .capture{
+    padding:120px 32px;
+    background:var(--paper);
+  }
+  .capture-inner{
+    max-width:1440px;margin:0 auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+  }
+  .cap{
+    border-radius:8px;
+    padding:56px 48px;
+    position:relative;
+    overflow:hidden;
+    min-height:420px;
+    display:flex;flex-direction:column;
+  }
+  .cap-free{
+    background:var(--plum);
+    color:var(--rose-tint);
+  }
+  .cap-free::after{
+    content:'';position:absolute;
+    top:-30%;right:-20%;
+    width:420px;height:420px;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(230,194,199,.18),transparent 60%);
+  }
+  .cap-news{
+    background:var(--ivory);
+    border:1px solid var(--rule);
+    color:var(--ink);
+  }
+  .cap-news::after{
+    content:'';position:absolute;
+    bottom:-30%;left:-15%;
+    width:380px;height:380px;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(220,161,168,.18),transparent 60%);
+  }
+  .cap-eyebrow{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    margin-bottom:24px;
+    display:flex;align-items:center;gap:14px;
+    position:relative;z-index:2;
+  }
+  .cap-eyebrow::before{content:'';width:28px;height:1px;background:currentColor}
+  .cap-free .cap-eyebrow{color:var(--rose)}
+  .cap-news .cap-eyebrow{color:var(--rose)}
+  .cap h3{
+    font-family:var(--serif);
+    font-size:clamp(28px,3vw,42px);
+    font-weight:300;
+    line-height:1.05;
+    letter-spacing:-.01em;
+    margin-bottom:16px;
+    position:relative;z-index:2;
+    font-variation-settings:"opsz" 144;
+  }
+  .cap-free h3{color:var(--paper)}
+  .cap h3 em{font-style:italic}
+  .cap-free h3 em{color:var(--rose)}
+  .cap-news h3 em{color:var(--plum)}
+  .cap p{
+    font-size:15px;
+    line-height:1.7;
+    margin-bottom:32px;
+    max-width:440px;
+    position:relative;z-index:2;
+  }
+  .cap-free p{color:rgba(230,194,199,.75)}
+  .cap-news p{color:var(--ink-soft)}
+  .cap-cover-mockup{
+    position:absolute;
+    bottom:-40px;right:-20px;
+    width:180px;
+    aspect-ratio:2/3;
+    border-radius:4px;
+    background:linear-gradient(160deg,var(--rose),var(--rose-soft));
+    box-shadow:0 30px 60px -20px rgba(0,0,0,.5);
+    transform:rotate(8deg);
+    z-index:1;
+    display:flex;align-items:center;justify-content:center;
+    padding:18px;
+  }
+  .cap-cover-mockup span{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:18px;
+    color:var(--plum-deep);
+    text-align:center;
+    line-height:1.2;
+    border:1px solid rgba(61,31,39,.3);
+    padding:14px 10px;
+    width:100%;
+  }
+  .cap-actions{margin-top:auto;display:flex;gap:12px;flex-wrap:wrap;position:relative;z-index:2}
+  .btn-rose{
+    background:var(--rose);color:var(--plum-deep);font-weight:600;
+    padding:14px 24px;border-radius:999px;
+    font-family:var(--sans);font-size:13px;letter-spacing:.04em;
+    display:inline-flex;align-items:center;gap:10px;
+    transition:all .3s;
+  }
+  .btn-rose:hover{background:var(--rose-soft);transform:translateY(-1px)}
+
+  .nl-form{
+    display:flex;flex-direction:column;gap:10px;
+    position:relative;z-index:2;
+    max-width:380px;
+  }
+  .nl-form .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .nl-form input{
+    padding:14px 16px;
+    background:var(--paper);
+    border:1px solid var(--rule);
+    border-radius:6px;
+    font-family:var(--sans);
+    font-size:14px;
+    color:var(--ink);
+    outline:none;
+    transition:all .25s;
+  }
+  .nl-form input:focus{border-color:var(--plum);background:#fff}
+  .nl-form button{
+    margin-top:6px;
+    background:var(--plum);color:var(--paper);
+    border:none;
+    padding:14px 18px;
+    font-family:var(--sans);font-size:13px;font-weight:500;letter-spacing:.04em;
+    border-radius:6px;cursor:pointer;
+    transition:background .3s;
+  }
+  .nl-form button:hover{background:var(--plum-deep)}
+  .nl-fine{
+    font-family:var(--mono);
+    font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ink-faint);margin-top:12px;
+    position:relative;z-index:2;
+  }
+
+  /* ─── FOOTER ─────────────────────────────────────────── */
+  footer{
+    background:var(--plum-deep);
+    color:var(--rose-tint);
+    padding:80px 32px 32px;
+  }
+  .foot-inner{
+    max-width:1440px;margin:0 auto;
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr 1fr;
+    gap:60px;
+    padding-bottom:48px;
+    border-bottom:1px solid rgba(230,194,199,.14);
+  }
+  .foot-brand{
+    font-family:var(--serif);
+    font-size:36px;
+    font-weight:300;
+    color:var(--paper);
+    margin-bottom:8px;
+    font-variation-settings:"opsz" 144;
+  }
+  .foot-brand small{
+    display:block;
+    font-family:var(--mono);font-size:10px;letter-spacing:.4em;
+    color:var(--rose);margin-top:8px;text-transform:uppercase;
+  }
+  .foot-desc{
+    font-size:14px;line-height:1.7;
+    color:rgba(230,194,199,.55);
+    max-width:380px;
+    margin:24px 0 32px;
+  }
+  .foot-social{display:flex;gap:10px}
+  .foot-social a{
+    width:38px;height:38px;border-radius:50%;
+    border:1px solid rgba(230,194,199,.2);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:11px;
+    color:rgba(230,194,199,.65);
+    transition:all .3s;
+  }
+  .foot-social a:hover{background:var(--rose);color:var(--plum-deep);border-color:var(--rose)}
+  .foot-col h5{
+    font-family:var(--mono);
+    font-size:10px;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--rose);margin-bottom:20px;font-weight:500;
+  }
+  .foot-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .foot-col a{
+    color:rgba(230,194,199,.6);font-size:14px;
+    transition:color .3s;
+  }
+  .foot-col a:hover{color:var(--paper)}
+  .foot-bottom{
+    max-width:1440px;margin:0 auto;
+    padding-top:24px;
+    display:flex;justify-content:space-between;
+    font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    color:rgba(230,194,199,.35);
+    flex-wrap:wrap;gap:16px;
+  }
+  .foot-bottom a{color:rgba(230,194,199,.55)}
+  .foot-bottom a:hover{color:var(--rose)}
+
+  /* ─── REVEAL ON SCROLL ───────────────────────────────── */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s ease,transform .9s ease}
+  .reveal.on{opacity:1;transform:translateY(0)}
+
+  /* ─── RESPONSIVE ─────────────────────────────────────── */
+  @media(max-width:1080px){
+    .hero-grid{grid-template-columns:1fr;gap:48px}
+    .hero-art{aspect-ratio:5/4}
+    .feature-inner{grid-template-columns:1fr;gap:48px}
+    .worlds-head{grid-template-columns:1fr;gap:24px}
+    .worlds-head p{justify-self:start}
+    .also-head{grid-template-columns:1fr;gap:32px}
+    .also-books{grid-template-columns:repeat(3,1fr)}
+    .capture-inner{grid-template-columns:1fr}
+    .foot-inner{grid-template-columns:1fr 1fr;gap:40px}
+    .nav-grid{grid-template-columns:auto 1fr auto}
+    .nav-left,.nav-right .nav-link{display:none}
+    .nav-right{justify-content:flex-end}
+    .brand{text-align:left}
+    .brand svg{height:50px}
+    .schedule-list{grid-template-columns:repeat(3,1fr)}
+    .worlds-grid > .world{grid-column:span 12 !important}
+  }
+  @media(max-width:640px){
+    .top-strip{padding:8px 16px;font-size:10px}
+    .nav-grid{padding:14px 16px}
+    .brand{font-size:22px}
+    .hero{padding:48px 16px 64px}
+    .hero-meta-grid{grid-template-columns:1fr}
+    .hero-numbers{grid-template-columns:repeat(2,1fr)}
+    .hero-numbers > div:nth-child(2){border-right:none}
+    .hero-numbers > div:nth-child(1),.hero-numbers > div:nth-child(2){border-bottom:1px solid var(--rule)}
+    .feature,.worlds,.also,.capture{padding:80px 16px}
+    .quiz-band-inner{grid-template-columns:1fr;text-align:center}
+    .also-books{grid-template-columns:repeat(2,1fr)}
+    .boxset{grid-template-columns:1fr;text-align:center}
+    .boxset-art{justify-self:center}
+    .boxset-actions{justify-content:center}
+    .cap{padding:40px 28px}
+    .cap-cover-mockup{display:none}
+    .foot-inner{grid-template-columns:1fr;padding:0 0 32px}
+  }
+</style>
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '353292');
+</script>
+<!-- End MailerLite Universal -->
+</head>
+<body>
+
+<!-- TOP STRIP -->
+<div class="top-strip">
+  <span>VOL. 04 · ISSUE 02 · SPRING 2026</span>
+  <div class="ticker"><div class="ticker-track">
+    <span>NEW SERIES — HEARTS OF SUGAR SPRINGS 1 — MAY 6</span>
+    <span>FREE READ — A BLOSSOMING LOVE</span>
+    <span>NEW SERIES — HEARTS OF SUGAR SPRINGS 1 — MAY 6</span>
+    <span>FREE READ — A BLOSSOMING LOVE</span>
+  </div></div>
+  <a href="mailto:bj@bjruffin.com">bj@bjruffin.com</a>
+</div>
+
+<!-- NAV -->
+<nav class="site">
+  <div class="nav-grid">
+    <div class="nav-left">
+      <a href="/my-story" class="nav-link">My Story</a>
+      <a href="/library" class="nav-link">Library</a>
+      <a href="/blog" class="nav-link">Blog</a>
+      <a href="/audiobooks" class="nav-link">Audiobooks <span style="opacity:.55;font-size:.78em;letter-spacing:.05em">(coming soon)</span></a>
+    </div>
+    <a href="/" class="brand" aria-label="BJ Ruffin Stories">
+      <svg viewBox="0 0 300 135" xmlns="http://www.w3.org/2000/svg">
+        <path class="chev" d="M126 33 L150 50 L174 33"/>
+        <circle class="dot" cx="150" cy="40" r="4.5"/>
+        <line class="rule" x1="150" y1="50" x2="150" y2="60" stroke-width="1.2" opacity=".25"/>
+        <text class="wordmark" x="150" y="93" text-anchor="middle">BJ Ruffin</text>
+        <line class="rule" x1="68" y1="102" x2="100" y2="102"/>
+        <line class="rule" x1="200" y1="102" x2="232" y2="102"/>
+        <text class="stories" x="150" y="118" text-anchor="middle">STORIES</text>
+      </svg>
+    </a>
+    <div class="nav-right">
+      <a href="#newsletter" class="nav-link">Newsletter</a>
+      <a href="https://quiz.bjruffin.com/sf/67cf92ee" class="nav-link">Quiz</a>
+      <a href="https://dl.bookfunnel.com/5ak59tk5wf" class="nav-cta">Free Read</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding: 60px 32px 100px">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-issue">No. 01 — The Editor's Letter</div>
+      <h1 class="hero-title">
+        Love stories<br>
+        that <em>take you</em><br>
+        <span class="underline-word">places.</span>
+      </h1>
+    </div>
+    <div class="hero-meta">
+      <p class="lede">From mountain lodges to jazz-filled nights, every BJ Ruffin story is a quiet journey grounded in love, resilience, and the ties that hold us.</p>
+      <dl class="hero-meta-grid">
+        <div class="meta-row">
+          <dt>Genre</dt>
+          <dd>Sweet, clean romance</dd>
+        </div>
+        <div class="meta-row">
+          <dt>Worlds</dt>
+          <dd>Four &amp; counting</dd>
+        </div>
+        <div class="meta-row">
+          <dt>Pace</dt>
+          <dd>Slow burn, soft landing</dd>
+        </div>
+        <div class="meta-row">
+          <dt>Promise</dt>
+          <dd>Always a happy ever after</dd>
+        </div>
+      </dl>
+      <div class="hero-actions">
+        <a href="/library" class="btn btn-primary">Explore the Books <span class="arrow">→</span></a>
+        <a href="https://dl.bookfunnel.com/5ak59tk5wf" class="btn btn-ghost">Get a Free Read</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- numbers row -->
+  <div class="hero-numbers">
+    <div>
+      <div class="num-val"><em>7</em></div>
+      <div class="num-label">Novels Published</div>
+    </div>
+    <div>
+      <div class="num-val"><em>4</em> Worlds</div>
+      <div class="num-label">From Ranch to Jazz</div>
+    </div>
+    <div>
+      <div class="num-val">100<em>%</em></div>
+      <div class="num-label">Sweet &amp; Clean</div>
+    </div>
+    <div>
+      <div class="num-val"><em>∞</em></div>
+      <div class="num-label">Happy Endings</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE: NEW SERIES -->
+<section class="feature reveal" style="padding: 100px 32px; line-height: 1.7">
+  <div class="feature-inner">
+    <div class="feature-info">
+      <div class="section-tag">New Series · Now Available</div>
+      <h2>Hearts of <em>Sugar Springs</em></h2>
+      <div class="tagline">Tender love. Rugged lives.</div>
+      <p class="desc" style="line-height: 1.7">In Sugar Springs, Montana, every love story is someone else's beginning.<br><br>Six friends. Six love stories. One small town with a big heart — where guarded cowboys open up, city girls put down roots, old flames get second chances, and love has a way of finding people right where they are. Warm. Hopeful. Clean romance that stays with you long after the last page.<br><br>Start with Book One and let Sugar Springs keep you.</p>
+
+      <div class="release-schedule">
+        <div class="schedule-head">
+          <h4>Release Schedule</h4>
+          <span>2026 · Six books</span>
+        </div>
+        <div class="schedule-list">
+          <div class="schedule-item live">
+            <div class="si-num">01</div>
+            <div class="si-when">May 6 · Live</div>
+          </div>
+          <div class="schedule-item">
+            <div class="si-num">02</div>
+            <div class="si-when">May 20</div>
+          </div>
+          <div class="schedule-item">
+            <div class="si-num">03</div>
+            <div class="si-when">June 3</div>
+          </div>
+          <div class="schedule-item">
+            <div class="si-num">04</div>
+            <div class="si-when">June 17</div>
+          </div>
+          <div class="schedule-item">
+            <div class="si-num">05</div>
+            <div class="si-when">July 1</div>
+          </div>
+          <div class="schedule-item">
+            <div class="si-num">06</div>
+            <div class="si-when">July 15</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-actions">
+        <a href="#TODO-amazon-hoss-book1" class="btn btn-primary"
+           title="TODO: Insert Amazon link for Hearts of Sugar Springs Book 1">Buy on Amazon <span class="arrow">→</span></a>
+        <a href="#TODO-payhip-store" class="btn btn-ghost"
+           title="TODO: Insert Payhip store URL">Buy on Payhip</a>
+      </div>
+    </div>
+
+    <div class="book-stack" style="align-items: center">
+      <!-- Cover image: hoss-book1.jpg -->
+      <div class="book"><img src="/images/covers/hoss-book1.jpg" alt="Hearts of Sugar Springs Book 1" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></div>
+      <!-- Cover wired: hoss-book2.jpg -->
+      <div class="book"><img src="/images/covers/hoss-book2.jpg" alt="Hearts of Sugar Springs Book 2" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></div>
+      <!-- Cover wired: hoss-book3.jpg -->
+      <div class="book"><img src="/images/covers/hoss-book3.jpg" alt="Hearts of Sugar Springs Book 3" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></div>
+      <!-- Cover wired: hoss-book4.jpg -->
+      <div class="book"><img src="/images/covers/hoss-book4.jpg" alt="Hearts of Sugar Springs Book 4" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></div>
+      <!-- Cover wired: hoss-book5.jpg -->
+      <div class="book"><img src="/images/covers/hoss-book5.jpg" alt="Hearts of Sugar Springs Book 5" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></div>
+      <!-- Cover wired: hoss-book6.jpg -->
+      <div class="book"><img src="/images/covers/hoss-book6.jpg" alt="Hearts of Sugar Springs Book 6" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ STRIP -->
+<section class="quiz-band reveal">
+  <div class="quiz-band-inner">
+    <div class="quiz-eyebrow">Reader Path · 60 Seconds</div>
+    <h3>Find your <em>perfect</em> sweet romance — answer five small questions, meet your next great love story.</h3>
+    <a href="https://quiz.bjruffin.com/sf/67cf92ee" class="btn-quiz">Take the Quiz <span>→</span></a>
+  </div>
+</section>
+
+<!-- WORLDS -->
+<section class="worlds reveal" style="padding: 100px 32px">
+  <div class="worlds-inner">
+    <div class="worlds-head">
+      <div>
+        <div class="section-tag">Where Love Will Take You</div>
+        <h2>Every story is<br>a new <em>world.</em></h2>
+      </div>
+      <p>Pick your scenery. Each universe carries its own light, its own slow-burn rhythm, and its own happily-ever-after.</p>
+    </div>
+
+    <div class="worlds-grid">
+      <div class="world w1">
+        <div class="world-num">01</div>
+        <span class="world-tag">Ranch &amp; Country</span>
+        <h3>Wide open spaces,<br><em>closer hearts.</em></h3>
+        <p>Dusty trails, family legacies, and the kind of love that's as steady as the land beneath your feet.</p>
+        <div class="world-foot">
+          <a href="/library">Explore these stories →</a>
+          <span class="count">06 books</span>
+        </div>
+      </div>
+      <div class="world w2">
+        <div class="world-num">02</div>
+        <span class="world-tag">Mountains &amp; Towns</span>
+        <h3>Where fresh starts <em>find you.</em></h3>
+        <p>Misty peaks, charming inns, and second chances tucked into the quiet corners of Vermont.</p>
+        <div class="world-foot">
+          <a href="/library">Explore these stories →</a>
+          <span class="count">06 books</span>
+        </div>
+      </div>
+      <div class="world w3">
+        <div class="world-num">03</div>
+        <span class="world-tag">Jazz &amp; City Nights</span>
+        <h3>Love with a <em>soundtrack.</em></h3>
+        <p>Velvet booths, smoky melodies, and connections that spark the moment the music starts playing.</p>
+        <div class="world-foot">
+          <a href="/library">Coming soon →</a>
+          <span class="count">06 books</span>
+        </div>
+      </div>
+      <div class="world w4">
+        <div class="world-num">04</div>
+        <span class="world-tag">Flower Shops &amp; Small Business</span>
+        <h3>Blooming where<br><em>you're planted.</em></h3>
+        <p>Petals, passion projects, and the kind of love that grows when you least expect it.</p>
+        <div class="world-foot">
+          <a href="https://dl.bookfunnel.com/5ak59tk5wf">Free Read · New Series Jan 2027 →</a>
+          <span class="count">01 Book</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ALSO BY -->
+<section class="also reveal">
+  <div class="also-inner">
+    <div class="also-head">
+      <div>
+        <div class="label">Also By BJ Ruffin</div>
+        <h2>Love &amp; <em>Legacy</em></h2>
+        <div class="place">Saving Maple Grove Inn · Woodstock, VT</div>
+      </div>
+      <div>
+        <div class="meta-pill">Complete Series · 6 Books</div>
+        <p>She came home for a funeral. She stayed for a fight and found love she never saw coming. The Love and Legacy series follows Julia Wilson as she trades her Manhattan law career to save her family's beloved Vermont inn, face down a ruthless developer, and navigate a love story full of complications, courage, and hard-won joy.</p>
+        <p>Six books. One unforgettable family. A love story worth every page. Warm, hopeful, clean romance — start with Book One.</p>
+        <div class="row-actions">
+          <a href="https://www.amazon.com/author/bjruffinstories" class="btn btn-primary">View on Amazon <span class="arrow">→</span></a>
+          <a href="#TODO-payhip-store" title="TODO: Insert Payhip store URL" class="btn btn-ghost">View on Payhip</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="also-books">
+      <!-- TODO: Replace cover with <img src="/images/covers/ll-book1.jpg" alt="Love and Legacy: Saving Maple Grove Inn Book 1" loading="lazy"> -->
+      <a href="#TODO-amazon-ll-book1" title="TODO: Insert Amazon link for L&amp;L Book 1" class="ab"><div class="ab-cover"><img src="/images/covers/ll-book1.jpg" alt="Love and Legacy Book 1" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></div><div class="ab-meta">Book 01</div><div class="ab-title">The Inn at Maple Grove</div></a>
+      <!-- TODO: Replace cover with <img src="/images/covers/ll-book2.jpg" alt="Love and Legacy Book 2" loading="lazy"> -->
+      <a href="#TODO-amazon-ll-book2" title="TODO: Insert Amazon link for L&amp;L Book 2" class="ab"><div class="ab-cover"><img src="/images/covers/ll-book2.jpg" alt="Love and Legacy Book 2" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></div><div class="ab-meta">Book 02</div><div class="ab-title">Something Worth Staying For</div></a>
+      <!-- TODO: Replace cover with <img src="/images/covers/ll-book3.jpg" alt="Love and Legacy Book 3" loading="lazy"> -->
+      <a href="https://www.amazon.com/Love-Legacy-Saving-Maple-Grove-ebook/dp/B0D5BV4Z7W/" class="ab"><div class="ab-cover"><img src="/images/covers/ll-book3.jpg" alt="Love and Legacy Book 3" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></div><div class="ab-meta">Book 03</div><div class="ab-title">Between Us and the Truth</div></a>
+      <!-- TODO: Replace cover with <img src="/images/covers/ll-book4.jpg" alt="Love and Legacy Book 4" loading="lazy"> -->
+      <a href="#TODO-amazon-ll-book4" title="TODO: Insert Amazon link for L&amp;L Book 4" class="ab"><div class="ab-cover"><img src="/images/covers/ll-book4.jpg" alt="Love and Legacy Book 4" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></div><div class="ab-meta">Book 04</div><div class="ab-title">Hold On</div></a>
+      <!-- TODO: Replace cover with <img src="/images/covers/ll-book5.jpg" alt="Love and Legacy Book 5" loading="lazy"> -->
+      <a href="#TODO-amazon-ll-book5" title="TODO: Insert Amazon link for L&amp;L Book 5" class="ab"><div class="ab-cover"><img src="/images/covers/ll-book5.jpg" alt="Love and Legacy Book 5" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></div><div class="ab-meta">Book 05</div><div class="ab-title">After the Fire</div></a>
+      <!-- TODO: Replace cover with <img src="/images/covers/ll-book6.jpg" alt="Love and Legacy Book 6" loading="lazy"> -->
+      <a href="#TODO-amazon-ll-book6" title="TODO: Insert Amazon link for L&amp;L Book 6" class="ab"><div class="ab-cover"><img src="/images/covers/ll-book6.jpg" alt="Love and Legacy Book 6" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></div><div class="ab-meta">Book 06</div><div class="ab-title">Maple in Bloom</div></a>
+    </div>
+
+    <div class="boxset">
+      <div class="boxset-art">L&amp;L</div>
+      <div>
+        <h4>Love &amp; Legacy — Complete Box Set</h4>
+        <p>All six books · The complete saga · Ebook &amp; audio</p>
+      </div>
+      <div class="boxset-actions">
+        <a href="https://www.amazon.com/author/bjruffinstories" class="btn btn-primary">Amazon</a>
+        <a href="#TODO-payhip-store" title="TODO: Insert Payhip store URL" class="btn btn-ghost">Payhip</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAPTURE -->
+<section class="capture reveal">
+  <div class="capture-inner">
+    <div class="cap cap-free" style="font-family: &quot;DM Sans&quot;">
+      <div class="cap-eyebrow">A Free Gift For You</div>
+      <h3>Start reading<br>today — <em>on us.</em></h3>
+      <p style="font-family: 'DM Sans'; width: 316px">Download <em>A Blossoming Love</em> today.<br><em>Love wasn't on Emily's inventory list, but it walked through her door anyway.</em><br>One stranger. One bouquet. One connection that felt like fate. But fate, it turns out, has a complicated past. Some love stories begin with flowers. This one ends with the truth.</p>
+      <div class="cap-actions">
+        <a href="https://dl.bookfunnel.com/5ak59tk5wf" class="btn-rose">Get Your Free Read <span>→</span></a>
+      </div>
+      <a href="https://dl.bookfunnel.com/5ak59tk5wf" class="cap-cover-mockup" aria-label="A Blossoming Love — get your free read" style="padding:0;background:none;overflow:hidden"><img src="/images/covers/blossoming-love.png" alt="A Blossoming Love — A Flower Shop Romance by BJ Ruffin" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:4px"></a>
+    </div>
+
+    <div class="cap cap-news" id="newsletter">
+      <div class="cap-eyebrow">Join the Reader List</div>
+      <h3>Be the <em>first</em><br>to know.</h3>
+      <p>New releases, exclusive previews, giveaways, and sweet romance recommendations straight to your inbox, never more than once a week.</p>
+      <form class="nl-form"
+            id="ml-subscribe"
+            action="https://assets.mailerlite.com/jsonp/353292/forms/186388756007224639/subscribe"
+            method="post"
+            target="ml-target">
+        <div class="row">
+          <input type="text" name="fields[name]" placeholder="First name" required>
+          <input type="email" name="fields[email]" placeholder="Email address" required>
+        </div>
+        <!-- honeypot: bots fill this; real visitors don't see it -->
+        <input type="text" name="b_353292_186388756007224639" tabindex="-1" autocomplete="off"
+               aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
+        <button type="submit">Subscribe Now</button>
+      </form>
+      <iframe name="ml-target" title="newsletter signup target" aria-hidden="true"
+              style="display:none;border:0;width:0;height:0"></iframe>
+      <div class="nl-success" hidden
+           style="font-family:var(--serif);font-style:italic;font-size:18px;color:var(--plum);
+                  padding:18px 0;border-top:1px solid var(--rule);margin-top:8px;position:relative;z-index:2">
+        <strong style="font-style:normal;font-family:var(--mono);font-size:11px;letter-spacing:.22em;
+                       text-transform:uppercase;color:var(--rose);display:block;margin-bottom:8px">Welcome ✓</strong>
+        Check your inbox to confirm your subscription. Your free read is on the way.
+      </div>
+      <div class="nl-fine">No spam · Unsubscribe anytime</div>
+      <script>
+        (function(){
+          var form = document.getElementById('ml-subscribe');
+          var success = form.parentNode.querySelector('.nl-success');
+          form.addEventListener('submit', function(){
+            // The form posts into the hidden iframe so the page stays put.
+            // MailerLite registers the subscriber and triggers the double-opt-in email.
+            // We optimistically show the success state after a short delay.
+            setTimeout(function(){
+              form.hidden = true;
+              success.hidden = false;
+            }, 600);
+          });
+        })();
+      </script>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div>
+      <div class="foot-brand">
+        <svg viewBox="0 0 300 135" xmlns="http://www.w3.org/2000/svg" style="height:80px;width:auto;display:block">
+          <path d="M126 33 L150 50 L174 33" stroke="#DCA1A8" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="150" cy="40" r="4.5" fill="#DCA1A8" opacity="0.5"/>
+          <line x1="150" y1="50" x2="150" y2="60" stroke="#DCA1A8" stroke-width="1.2" opacity="0.3"/>
+          <text x="150" y="93" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="38" font-weight="400" fill="#FBF7F2" letter-spacing="3">BJ Ruffin</text>
+          <line x1="68" y1="102" x2="100" y2="102" stroke="#DCA1A8" stroke-width="0.8" opacity="0.4"/>
+          <line x1="200" y1="102" x2="232" y2="102" stroke="#DCA1A8" stroke-width="0.8" opacity="0.4"/>
+          <text x="150" y="118" text-anchor="middle" font-family="DM Mono, monospace" font-size="11" fill="#DCA1A8" letter-spacing="8" font-weight="400">STORIES</text>
+        </svg>
+      </div>
+      <p class="foot-desc">Sweet, clean romances about love, family, and the resilience of the human spirit — from the mountains of Vermont to the ranches of Sugar Springs.</p>
+      <div class="foot-social">
+        <a href="https://instagram.com/bjruffinauthor?igshid=MzNlNGNkZWQ4Mg==" target="_blank" rel="noopener" aria-label="Instagram">Ig</a>
+        <a href="https://www.facebook.com/bjruffinromance/" target="_blank" rel="noopener" aria-label="Facebook">Fb</a>
+        <a href="https://pin.it/5ar5LzB8l" target="_blank" rel="noopener" aria-label="Pinterest">Pt</a>
+        <a href="https://www.goodreads.com/author/show/49152576.B_J_Ruffin" target="_blank" rel="noopener" aria-label="Goodreads">Gr</a>
+      </div>
+    </div>
+    <div class="foot-col">
+      <h5>Navigate</h5>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/my-story">My Story</a></li>
+        <li><a href="/library">Library</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/audiobooks">Audiobooks</a></li>
+        <li><a href="#newsletter">Newsletter</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Shop</h5>
+      <ul>
+        <li><a href="https://www.amazon.com/author/bjruffinstories">Amazon Store</a></li>
+        <li><a href="#TODO-payhip-store" title="TODO: Insert Payhip store URL">Payhip Store</a></li>
+        <li><a href="https://dl.bookfunnel.com/5ak59tk5wf">Free Read</a></li>
+        <li><a href="https://quiz.bjruffin.com/sf/67cf92ee">Take the Quiz</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Connect</h5>
+      <ul>
+        <li><a href="mailto:bj@bjruffin.com">bj@bjruffin.com</a></li>
+        <li><a href="#">Charlotte, NC</a></li>
+        </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 BJ Ruffin · All rights reserved</span>
+    <span><a href="https://www.freeprivacypolicy.com/live/c646f873-2a65-494b-8584-55ae36ba83bc" target="_blank" rel="noopener">Privacy</a></span>
+  </div>
+</footer>
+
+<script>
+  // reveal on scroll
+  const obs = new IntersectionObserver(
+    (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); }),
+    { threshold: 0.08 }
+  );
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>

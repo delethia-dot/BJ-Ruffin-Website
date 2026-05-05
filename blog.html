@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — BJ Ruffin</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/site.css">
+<style>
+
+.blog-hero{padding:80px 32px 40px;max-width:1440px;margin:0 auto}
+.blog-hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);margin-bottom:24px;display:flex;gap:14px;align-items:center}
+.blog-hero .eyebrow::before{content:'';width:28px;height:1px;background:var(--rose)}
+.blog-hero h1{font-family:var(--serif);font-size:clamp(56px,7vw,108px);font-weight:300;line-height:.95;letter-spacing:-.02em;color:var(--ink);font-variation-settings:"opsz" 144;margin-bottom:24px}
+.blog-hero h1 em{font-style:italic;color:var(--plum);font-weight:400}
+.blog-hero .lede{font-family:var(--serif);font-style:italic;font-size:22px;font-weight:300;line-height:1.4;color:var(--ink-soft);max-width:680px}
+
+.blog-cats{max-width:1440px;margin:48px auto;padding:24px 32px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.blog-cats .label{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);margin-right:8px}
+.blog-cats .chip{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:7px 14px;border:1px solid var(--rule);border-radius:999px;color:var(--ink-soft);cursor:pointer;transition:all .25s}
+.blog-cats .chip:hover{border-color:var(--plum);color:var(--plum)}
+.blog-cats .chip.active{background:var(--plum);color:var(--paper);border-color:var(--plum)}
+
+.blog-feature{max-width:1440px;margin:0 auto 64px;padding:0 32px;display:grid;grid-template-columns:1.2fr 1fr;gap:64px;align-items:center}
+.blog-feature .art{aspect-ratio:4/3;background:linear-gradient(160deg,var(--rose-tint),var(--rose-soft));border-radius:3px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;box-shadow:0 30px 80px -30px rgba(90,47,58,.25)}
+.blog-feature .art::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(135deg,transparent 0,transparent 18px,rgba(90,47,58,.04) 18px,rgba(90,47,58,.04) 19px)}
+.blog-feature .art-label{position:relative;font-family:var(--serif);font-style:italic;font-size:18px;color:var(--plum);background:var(--ivory);padding:14px 22px;border:1px solid var(--rule)}
+.blog-feature .pill{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--rose);margin-bottom:16px}
+.blog-feature h2{font-family:var(--serif);font-size:clamp(36px,4vw,56px);font-weight:300;line-height:1.05;letter-spacing:-.02em;color:var(--ink);font-variation-settings:"opsz" 144;margin-bottom:20px}
+.blog-feature h2 em{font-style:italic;color:var(--plum)}
+.blog-feature p{font-family:var(--serif);font-size:18px;line-height:1.55;color:var(--ink-soft);margin-bottom:24px;max-width:540px}
+.blog-feature .byline{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:24px}
+.blog-feature .byline b{color:var(--plum);font-weight:500}
+.blog-feature a.read{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--plum);border-bottom:1px solid var(--plum);padding-bottom:4px}
+
+.blog-grid{max-width:1440px;margin:0 auto 80px;padding:0 32px;display:grid;grid-template-columns:repeat(3,1fr);gap:40px 32px}
+.post-card{display:flex;flex-direction:column;gap:16px;cursor:pointer}
+.post-card .art{aspect-ratio:4/3;background:linear-gradient(160deg,var(--paper-warm),var(--rose-tint));border-radius:3px;position:relative;overflow:hidden}
+.post-card.p2 .art{background:linear-gradient(160deg,#E8D7CE,#C9A697)}
+.post-card.p3 .art{background:linear-gradient(160deg,#D4B8A8,#8C5A3F)}
+.post-card.p4 .art{background:linear-gradient(160deg,#C8DAE6,#6F8FA8)}
+.post-card.p5 .art{background:linear-gradient(160deg,#E2C9CE,#A56D75)}
+.post-card.p6 .art{background:linear-gradient(160deg,#E5CFB8,#B8856B)}
+.post-card .art::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(135deg,transparent 0,transparent 16px,rgba(255,255,255,.04) 16px,rgba(255,255,255,.04) 17px)}
+.post-card .cat{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--rose)}
+.post-card h3{font-family:var(--serif);font-size:24px;font-weight:400;line-height:1.2;color:var(--ink);font-variation-settings:"opsz" 144}
+.post-card h3 em{font-style:italic;color:var(--plum)}
+.post-card .excerpt{font-family:var(--serif);font-size:15px;line-height:1.55;color:var(--ink-soft)}
+.post-card .when{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin-top:auto}
+
+@media (max-width:1080px){.blog-grid{grid-template-columns:repeat(2,1fr)}.blog-feature{grid-template-columns:1fr}}
+@media (max-width:680px){.blog-grid{grid-template-columns:1fr}}
+
+</style>
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '353292');
+</script>
+<!-- End MailerLite Universal -->
+</head>
+<body>
+
+<!-- TOP STRIP -->
+<div class="top-strip">
+  <span>VOL. 04 · ISSUE 02 · SPRING 2026</span>
+  <div class="ticker"><div class="ticker-track">
+    <span>NEW SERIES — HEARTS OF SUGAR SPRINGS 1 — MAY 6</span>
+    <span>FREE READ — A BLOSSOMING LOVE</span>
+    <span>NEW SERIES — HEARTS OF SUGAR SPRINGS 1 — MAY 6</span>
+    <span>FREE READ — A BLOSSOMING LOVE</span>
+  </div></div>
+  <a href="mailto:bj@bjruffin.com">bj@bjruffin.com</a>
+</div>
+
+<!-- NAV -->
+<nav class="site">
+  <div class="nav-grid">
+    <div class="nav-left">
+      <a href="/library" class="nav-link">Library</a>
+      <a href="/my-story" class="nav-link">My Story</a>
+      <a href="/blog" class="nav-link">Blog</a>
+      <a href="/audiobooks" class="nav-link">Audiobooks <span style="opacity:.55;font-size:.78em;letter-spacing:.05em">(coming soon)</span></a>
+    </div>
+    <a href="/" class="brand" aria-label="BJ Ruffin Stories">
+      <svg viewBox="0 0 300 135" xmlns="http://www.w3.org/2000/svg">
+        <path class="chev" d="M126 33 L150 50 L174 33"></path>
+        <circle class="dot" cx="150" cy="40" r="4.5"></circle>
+        <line class="rule" x1="150" y1="50" x2="150" y2="60" stroke-width="1.2" opacity=".25"></line>
+        <text class="wordmark" x="150" y="93" text-anchor="middle">BJ Ruffin</text>
+        <line class="rule" x1="68" y1="102" x2="100" y2="102"></line>
+        <line class="rule" x1="200" y1="102" x2="232" y2="102"></line>
+        <text class="stories" x="150" y="118" text-anchor="middle">STORIES</text>
+      </svg>
+    </a>
+    <div class="nav-right">
+      <a href="/#newsletter" class="nav-link">Newsletter</a>
+      <a href="https://quiz.bjruffin.com/sf/67cf92ee" class="nav-link">Quiz</a>
+      <a href="https://dl.bookfunnel.com/5ak59tk5wf" class="nav-cta">Free Read</a>
+    </div>
+  </div>
+</nav>
+
+
+<section class="blog-hero reveal">
+  <div class="eyebrow">The Blog · Coming Soon</div>
+  <h1>Letters from the <em>writing room.</em></h1>
+  <p class="lede">Behind-the-scenes notes, character studies, the tropes I love, and the slow craft of writing love stories that last. The first essays drop the week of launch &mdash; subscribe and you'll be the first to read them.</p>
+</section>
+
+<div class="blog-cats reveal" id="blog-cats">
+  <span class="label">Read about</span>
+  <button type="button" class="chip active" data-cat="all">All Posts</button>
+  <button type="button" class="chip" data-cat="behind">Behind the Scenes</button>
+  <button type="button" class="chip" data-cat="spotlight">Sweet &amp; Clean Romance Spotlight</button>
+  <button type="button" class="chip" data-cat="process">Writing Process</button>
+  <button type="button" class="chip" data-cat="tropes">Tropes We Love</button>
+</div>
+
+<!-- FEATURED POST — Coming Soon teaser -->
+<section class="blog-feature reveal" data-cat="behind">
+  <div class="art"><div class="art-label">First Post · Coming Soon</div></div>
+  <div>
+    <div class="pill">Coming Soon · Behind the Scenes</div>
+    <h2>How I built <em>Sugar Springs</em> — one front porch at a time.</h2>
+    <p class="byline">First post drops <b>launch week</b> · Subscribe for the first read</p>
+    <p>Before there was a single love story, there was a town. A two-block main street, a feed store with a coffee pot that's always on, and six friends who needed a place to come home to. The full story of how Sugar Springs came together — and the small moments that built the world — is on its way.</p>
+    <a href="/#newsletter" class="read">Notify me when it drops →</a>
+  </div>
+</section>
+
+<!-- POST GRID — Coming Soon teasers tied to newsletter -->
+<section class="blog-grid reveal">
+  <a href="/#newsletter" class="post-card p2" data-cat="spotlight">
+    <div class="art"></div>
+    <div class="cat">Coming Soon · Sweet &amp; Clean Romance Spotlight</div>
+    <h3>Meet <em>Emily</em> — the heroine of <em>A Blossoming Love</em>.</h3>
+    <p class="excerpt">A florist who keeps her heart inventoried — until a stranger walks in and asks for the one bouquet she'd never make for herself. Character study coming in Issue 02.</p>
+    <div class="when">Notify me →</div>
+  </a>
+  <a href="/#newsletter" class="post-card p3" data-cat="tropes">
+    <div class="art"></div>
+    <div class="cat">Coming Soon · Tropes We Love</div>
+    <h3>Why I write <em>slow burn</em> — and how to spot the real thing.</h3>
+    <p class="excerpt">Some love stories sprint. Mine walk. A note on pacing, patience, and why the chapter where nothing seems to happen is the one I always rewrite first.</p>
+    <div class="when">Notify me →</div>
+  </a>
+  <a href="/#newsletter" class="post-card p4" data-cat="process">
+    <div class="art"></div>
+    <div class="cat">Coming Soon · Writing Process</div>
+    <h3>On writing <em>faceless</em> — and why my privacy matters.</h3>
+    <p class="excerpt">Not a secret. Not a gimmick. A small note on why my name is on the books, but my face isn't — and what that lets me write.</p>
+    <div class="when">Notify me →</div>
+  </a>
+  <a href="/#newsletter" class="post-card p5" data-cat="spotlight">
+    <div class="art"></div>
+    <div class="cat">Coming Soon · Sweet &amp; Clean Romance Spotlight</div>
+    <h3>Sweet &amp; clean romance authors <em>you should be reading</em>.</h3>
+    <p class="excerpt">A rotating shortlist of authors writing slow-burn, hard-won, happy-ever-after love stories. Discover your next favorite.</p>
+    <div class="when">Notify me →</div>
+  </a>
+  <a href="/#newsletter" class="post-card p6" data-cat="behind">
+    <div class="art"></div>
+    <div class="cat">Coming Soon · Behind the Scenes</div>
+    <h3>The cover reveal — <em>six covers,</em> one mood board.</h3>
+    <p class="excerpt">A look inside the design process: how dusty rose became the spine of the series, and the cover that almost didn't make it.</p>
+    <div class="when">Notify me →</div>
+  </a>
+  <a href="/#newsletter" class="post-card p2" data-cat="tropes">
+    <div class="art"></div>
+    <div class="cat">Coming Soon · Tropes We Love</div>
+    <h3>Forced proximity, second chances, and other tropes <em>I can't quit.</em></h3>
+    <p class="excerpt">A confessional tour of the romance tropes that keep showing up in my books — and the ones I'll never write. With reader recommendations.</p>
+    <div class="when">Notify me →</div>
+  </a>
+</section>
+
+<section style="background:var(--plum);padding:80px 32px;text-align:center;color:var(--rose-tint)">
+  <div style="max-width:680px;margin:0 auto">
+    <div style="font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);margin-bottom:18px">Be the first to read</div>
+    <h2 style="font-family:var(--serif);font-size:clamp(32px,4vw,52px);font-weight:300;line-height:1.05;letter-spacing:-.02em;color:var(--paper);margin-bottom:18px;font-variation-settings:'opsz' 144">First posts drop <em style="color:var(--rose);font-style:italic">launch week.</em></h2>
+    <p style="font-family:var(--serif);font-style:italic;font-size:18px;color:var(--rose-soft);margin-bottom:32px">Subscribe to the reader letter and every new essay lands in your inbox before it's anywhere else. Always sweet. Never spam.</p>
+    <a href="/#newsletter" class="btn" style="background:var(--rose);color:var(--plum-deep)">Join the Letter <span class="arrow">→</span></a>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div>
+      <div class="foot-brand">
+        <svg viewBox="0 0 300 135" xmlns="http://www.w3.org/2000/svg" style="height:80px;width:auto;display:block">
+          <path d="M126 33 L150 50 L174 33" stroke="#DCA1A8" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+          <circle cx="150" cy="40" r="4.5" fill="#DCA1A8" opacity="0.5"></circle>
+          <line x1="150" y1="50" x2="150" y2="60" stroke="#DCA1A8" stroke-width="1.2" opacity="0.3"></line>
+          <text x="150" y="93" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="38" font-weight="400" fill="#FBF7F2" letter-spacing="3">BJ Ruffin</text>
+          <line x1="68" y1="102" x2="100" y2="102" stroke="#DCA1A8" stroke-width="0.8" opacity="0.4"></line>
+          <line x1="200" y1="102" x2="232" y2="102" stroke="#DCA1A8" stroke-width="0.8" opacity="0.4"></line>
+          <text x="150" y="118" text-anchor="middle" font-family="DM Mono, monospace" font-size="11" fill="#DCA1A8" letter-spacing="8" font-weight="400">STORIES</text>
+        </svg>
+      </div>
+      <p class="foot-desc">Sweet, clean romances about love, family, and the resilience of the human spirit — from the mountains of Vermont to the ranches of Sugar Springs.</p>
+      <div class="foot-social">
+        <a href="https://instagram.com/bjruffinauthor?igshid=MzNlNGNkZWQ4Mg==" target="_blank" rel="noopener" aria-label="Instagram">Ig</a>
+        <a href="https://www.facebook.com/bjruffinromance/" target="_blank" rel="noopener" aria-label="Facebook">Fb</a>
+        <a href="https://pin.it/5ar5LzB8l" target="_blank" rel="noopener" aria-label="Pinterest">Pt</a>
+        <a href="https://www.goodreads.com/author/show/49152576.B_J_Ruffin" target="_blank" rel="noopener" aria-label="Goodreads">Gr</a>
+      </div>
+    </div>
+    <div class="foot-col">
+      <h5>Navigate</h5>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/my-story">My Story</a></li>
+        <li><a href="/library">Library</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/audiobooks">Audiobooks</a></li>
+        <li><a href="/#newsletter">Newsletter</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Shop</h5>
+      <ul>
+        <li><a href="https://www.amazon.com/author/bjruffinstories">Amazon Store</a></li>
+        <li><a href="#TODO-payhip-store" title="TODO: Insert Payhip store URL">Payhip Store</a></li>
+        <li><a href="https://dl.bookfunnel.com/5ak59tk5wf">Free Read</a></li>
+        <li><a href="https://quiz.bjruffin.com/sf/67cf92ee">Take the Quiz</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Connect</h5>
+      <ul>
+        <li><a href="mailto:bj@bjruffin.com">bj@bjruffin.com</a></li>
+        <li><a href="#">Charlotte, NC</a></li>
+        </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 BJ Ruffin · All rights reserved</span>
+    <span><a href="https://www.freeprivacypolicy.com/live/c646f873-2a65-494b-8584-55ae36ba83bc" target="_blank" rel="noopener">Privacy</a></span>
+  </div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(
+    (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); }),
+    { threshold: 0.08 }
+  );
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+
+<style>
+  #blog-cats .chip{cursor:pointer;background:transparent;font:inherit;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:7px 14px;border:1px solid var(--rule);border-radius:999px;color:var(--ink-soft);transition:all .25s}
+  .post-card[hidden],.blog-feature[hidden]{display:none !important}
+</style>
+<script>
+  (function(){
+    var chips = document.querySelectorAll('#blog-cats .chip');
+    var cards = document.querySelectorAll('.post-card');
+    var feature = document.querySelector('.blog-feature');
+    function applyCat(cat){
+      cards.forEach(function(c){
+        c.hidden = (cat !== 'all' && c.dataset.cat !== cat);
+      });
+      if(feature){
+        feature.hidden = (cat !== 'all' && feature.dataset.cat !== cat);
+      }
+    }
+    chips.forEach(function(chip){
+      chip.addEventListener('click', function(){
+        chips.forEach(function(c){ c.classList.remove('active'); });
+        chip.classList.add('active');
+        applyCat(chip.dataset.cat);
+      });
+    });
+  })();
+</script>
+</body>
+</html>

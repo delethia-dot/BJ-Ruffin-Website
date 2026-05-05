@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Story — BJ Ruffin</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/site.css">
+<style>
+
+.ms-hero{padding:80px 32px 100px;max-width:1440px;margin:0 auto;display:grid;grid-template-columns:1.1fr 1fr;gap:80px;align-items:center}
+.ms-hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);margin-bottom:24px;display:flex;gap:14px;align-items:center}
+.ms-hero .eyebrow::before{content:'';width:28px;height:1px;background:var(--rose)}
+.ms-hero h1{font-family:var(--serif);font-size:clamp(56px,7vw,108px);font-weight:300;line-height:.95;letter-spacing:-.02em;color:var(--ink);font-variation-settings:"opsz" 144;margin-bottom:24px}
+.ms-hero h1 em{font-style:italic;color:var(--plum)}
+.ms-hero p.lede{font-family:var(--serif);font-style:italic;font-size:22px;font-weight:300;line-height:1.5;color:var(--ink-soft);max-width:520px;margin-bottom:14px}
+.ms-hero .signature{font-family:'Fraunces',cursive;font-style:italic;font-size:48px;font-weight:300;color:var(--plum);transform:rotate(-3deg);margin-top:24px;letter-spacing:-.02em}
+.ms-hero-art{aspect-ratio:4/5;background:linear-gradient(180deg,var(--rose-tint),var(--paper-warm));border-radius:3px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;box-shadow:0 30px 80px -30px rgba(90,47,58,.25)}
+.ms-hero-art::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(135deg,transparent 0,transparent 18px,rgba(90,47,58,.04) 18px,rgba(90,47,58,.04) 19px)}
+.ms-hero-art .still-life{position:relative;text-align:center}
+.ms-hero-art .still-life .label{font-family:var(--mono);font-size:10px;letter-spacing:.25em;color:var(--plum);text-transform:uppercase;background:var(--ivory);padding:10px 18px;border:1px solid var(--rule);margin:0 auto 16px;display:inline-block}
+.ms-hero-art .still-life .label small{display:block;font-size:9px;letter-spacing:.18em;color:var(--ink-faint);margin-top:4px}
+.ms-hero-art .still-life .obj{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--plum);line-height:1.5;max-width:280px;margin:0 auto}
+.ms-hero-art .tag{position:absolute;top:24px;left:24px;background:var(--plum);color:var(--rose-tint);font-family:var(--mono);font-size:10px;letter-spacing:.25em;text-transform:uppercase;padding:8px 14px;border-radius:999px;z-index:2}
+
+.ms-letter{background:var(--ivory);padding:120px 32px;border-top:1px solid var(--rule)}
+.ms-letter-inner{max-width:760px;margin:0 auto}
+.ms-letter .salutation{font-family:var(--serif);font-style:italic;font-size:28px;color:var(--plum);margin-bottom:32px}
+.ms-letter p{font-family:var(--serif);font-size:19px;line-height:1.5;color:var(--ink);margin-bottom:1.5em;text-wrap:pretty}
+.ms-letter p em{font-style:italic;color:var(--plum)}
+.ms-letter .pull{font-family:var(--serif);font-style:italic;font-size:32px;line-height:1.3;color:var(--plum);border-left:2px solid var(--rose);padding-left:24px;margin:48px 0;font-weight:300;font-variation-settings:'opsz' 144}
+.ms-letter .closing{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);margin-top:48px;margin-bottom:8px}
+.ms-letter .sig{font-family:var(--serif);font-style:italic;font-size:36px;font-weight:300;color:var(--plum);transform:rotate(-2deg);display:inline-block}
+
+.ms-facts{max-width:1440px;margin:0 auto;padding:80px 32px;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.ms-facts > div{padding:0 24px;border-right:1px solid var(--rule)}
+.ms-facts > div:first-child{padding-left:0}
+.ms-facts > div:last-child{border-right:none;padding-right:0}
+.ms-facts .label{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px}
+.ms-facts .val{font-family:var(--serif);font-size:24px;font-weight:300;line-height:1.2;color:var(--plum);font-variation-settings:'opsz' 144}
+.ms-facts .val em{font-style:italic;color:var(--rose)}
+
+.ms-faceless{padding:120px 32px;text-align:center;background:var(--plum);color:var(--rose-tint)}
+.ms-faceless-inner{max-width:680px;margin:0 auto}
+.ms-faceless .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);margin-bottom:18px}
+.ms-faceless h2{font-family:var(--serif);font-size:clamp(36px,4.5vw,56px);font-weight:300;line-height:1.05;letter-spacing:-.02em;color:var(--paper);margin-bottom:24px;font-variation-settings:'opsz' 144}
+.ms-faceless h2 em{font-style:italic;color:var(--rose)}
+.ms-faceless p{font-family:var(--serif);font-style:italic;font-size:20px;line-height:1.55;color:var(--rose-soft)}
+
+@media (max-width:1080px){.ms-hero{grid-template-columns:1fr}.ms-facts{grid-template-columns:repeat(2,1fr);gap:32px}.ms-facts > div{border-right:none;padding:16px 0}}
+
+</style>
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '353292');
+</script>
+<!-- End MailerLite Universal -->
+</head>
+<body>
+
+<!-- TOP STRIP -->
+<div class="top-strip">
+  <span>VOL. 04 · ISSUE 02 · SPRING 2026</span>
+  <div class="ticker"><div class="ticker-track">
+    <span>NEW SERIES — HEARTS OF SUGAR SPRINGS 1 — MAY 6</span>
+    <span>FREE READ — A BLOSSOMING LOVE</span>
+    <span>NEW SERIES — HEARTS OF SUGAR SPRINGS 1 — MAY 6</span>
+    <span>FREE READ — A BLOSSOMING LOVE</span>
+  </div></div>
+  <a href="mailto:bj@bjruffin.com">bj@bjruffin.com</a>
+</div>
+
+<!-- NAV -->
+<nav class="site">
+  <div class="nav-grid">
+    <div class="nav-left">
+      <a href="/library" class="nav-link">Library</a>
+      <a href="/my-story" class="nav-link">My Story</a>
+      <a href="/blog" class="nav-link">Blog</a>
+      <a href="/audiobooks" class="nav-link">Audiobooks <span style="opacity:.55;font-size:.78em;letter-spacing:.05em">(coming soon)</span></a>
+    </div>
+    <a href="/" class="brand" aria-label="BJ Ruffin Stories">
+      <svg viewBox="0 0 300 135" xmlns="http://www.w3.org/2000/svg">
+        <path class="chev" d="M126 33 L150 50 L174 33"></path>
+        <circle class="dot" cx="150" cy="40" r="4.5"></circle>
+        <line class="rule" x1="150" y1="50" x2="150" y2="60" stroke-width="1.2" opacity=".25"></line>
+        <text class="wordmark" x="150" y="93" text-anchor="middle">BJ Ruffin</text>
+        <line class="rule" x1="68" y1="102" x2="100" y2="102"></line>
+        <line class="rule" x1="200" y1="102" x2="232" y2="102"></line>
+        <text class="stories" x="150" y="118" text-anchor="middle">STORIES</text>
+      </svg>
+    </a>
+    <div class="nav-right">
+      <a href="/#newsletter" class="nav-link">Newsletter</a>
+      <a href="https://quiz.bjruffin.com/sf/67cf92ee" class="nav-link">Quiz</a>
+      <a href="https://dl.bookfunnel.com/5ak59tk5wf" class="nav-cta">Free Read</a>
+    </div>
+  </div>
+</nav>
+
+
+<section class="ms-hero reveal">
+  <div>
+    <div class="eyebrow">My Story · The Author</div>
+    <h1>I write love stories <em>quietly.</em></h1>
+    <p class="lede">Love is not the absence of pain. It is the decision to believe in something beautiful despite it.</p>
+    <p style="font-family:var(--sans);font-size:16px;line-height:1.6;color:var(--ink-soft);max-width:520px">Welcome — I'm so glad you're here. Pull up a chair.</p>
+    <div class="signature">— BJ</div>
+  </div>
+  <div class="ms-hero-art">
+    <span class="tag">Vol. 04 · Spring</span>
+    <img src="/images/my-story/desk.jpg"
+         alt="And then he reached for her hand — a writer's hand at work"
+         loading="lazy"
+         style="position:absolute;inset:32px;width:calc(100% - 64px);height:calc(100% - 64px);object-fit:cover;border-radius:2px;box-shadow:0 18px 40px -16px rgba(90,47,58,.35);z-index:1">
+  </div>
+</section>
+
+<section class="ms-letter reveal">
+  <div class="ms-letter-inner">
+    <div class="salutation">Hello,</div>
+    <p>My name is BJ Ruffin, and I'd like to take a moment to tell you a little about myself. I am a hopeless romantic at heart — someone who has experienced the pain of love but refuses to let it diminish my belief in its power. Born and raised in Queens, New York, I have always been captivated by the magic of love and the resilience of the human spirit.</p>
+    <p>My mother is the source of my inspiration. She loved romance novels and inspired me to pursue writing later in life. I cared for her until she passed away in 2017, and I still feel her presence with me every day.</p>
+    <p>One of my greatest passions is spending time at the beach, where I find solace in the rhythmic waves and the vast expanse of the ocean. The beach is my sanctuary — a place where I can reflect, dream, and draw inspiration for my writing. The warm sand between my toes and the salty breeze on my skin rejuvenates my spirit and reminds me of the beauty in the world.</p>
+    <div class="pull">"Love is worth pursuing despite the scars it may leave behind."</div>
+    <p>Through my writing, I aim to capture the essence of love — the joy, the heartbreak, and the hope it brings. I believe in the power of words, and I strive to create stories that touch readers' hearts, reminding them that love is worth pursuing despite the scars it may leave behind. My journey as an author is an exploration of the human experience — an endeavor to inspire others to embrace love and all its complexities.</p>
+    <p>Together, let's discover the power of love one story at a time. I hope you enjoy reading these stories just as much as I enjoy writing them.</p>
+    <div class="closing">With love</div>
+    <div class="sig">BJ Ruffin</div>
+  </div>
+</section>
+
+<section class="ms-facts reveal">
+  <div>
+    <div class="label">Writes</div>
+    <div class="val">Sweet, clean <em>contemporary</em> romance</div>
+  </div>
+  <div>
+    <div class="label">Published</div>
+    <div class="val"><em>7</em> novels and counting</div>
+  </div>
+  <div>
+    <div class="label">Lives</div>
+    <div class="val">Charlotte, <em>NC</em></div>
+  </div>
+  <div>
+    <div class="label">Reads</div>
+    <div class="val">Stories that make her believe in <em>love</em> all over again.</div>
+  </div>
+</section>
+
+<section class="ms-faceless reveal">
+  <div class="ms-faceless-inner">
+    <div class="eyebrow">A note on privacy</div>
+    <h2>Why I write <em>faceless.</em></h2>
+    <p>The books are the public part of me. My family and quiet life aren't. You'll meet me on the page — through the characters, the small towns, the porches, and the people learning to love each other a little better. That's the version of me worth knowing.</p>
+  </div>
+</section>
+
+<section style="padding:100px 32px;text-align:center;max-width:680px;margin:0 auto">
+  <div style="font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);margin-bottom:18px">Stay in touch</div>
+  <h2 style="font-family:var(--serif);font-size:clamp(32px,4vw,52px);font-weight:300;line-height:1.05;letter-spacing:-.02em;color:var(--ink);margin-bottom:18px;font-variation-settings:'opsz' 144">The newsletter is the <em style="color:var(--plum);font-style:italic">best place</em> to find me.</h2>
+  <p style="font-family:var(--serif);font-style:italic;font-size:18px;color:var(--ink-soft);margin-bottom:32px">First looks at new books, recipes from the worlds, and the occasional letter when something needs to be said.</p>
+  <a href="/#newsletter" class="btn btn-primary">Join the Letter <span class="arrow">→</span></a>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div>
+      <div class="foot-brand">
+        <svg viewBox="0 0 300 135" xmlns="http://www.w3.org/2000/svg" style="height:80px;width:auto;display:block">
+          <path d="M126 33 L150 50 L174 33" stroke="#DCA1A8" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+          <circle cx="150" cy="40" r="4.5" fill="#DCA1A8" opacity="0.5"></circle>
+          <line x1="150" y1="50" x2="150" y2="60" stroke="#DCA1A8" stroke-width="1.2" opacity="0.3"></line>
+          <text x="150" y="93" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="38" font-weight="400" fill="#FBF7F2" letter-spacing="3">BJ Ruffin</text>
+          <line x1="68" y1="102" x2="100" y2="102" stroke="#DCA1A8" stroke-width="0.8" opacity="0.4"></line>
+          <line x1="200" y1="102" x2="232" y2="102" stroke="#DCA1A8" stroke-width="0.8" opacity="0.4"></line>
+          <text x="150" y="118" text-anchor="middle" font-family="DM Mono, monospace" font-size="11" fill="#DCA1A8" letter-spacing="8" font-weight="400">STORIES</text>
+        </svg>
+      </div>
+      <p class="foot-desc">Sweet, clean romances about love, family, and the resilience of the human spirit — from the mountains of Vermont to the ranches of Sugar Springs.</p>
+      <div class="foot-social">
+        <a href="https://instagram.com/bjruffinauthor?igshid=MzNlNGNkZWQ4Mg==" target="_blank" rel="noopener" aria-label="Instagram">Ig</a>
+        <a href="https://www.facebook.com/bjruffinromance/" target="_blank" rel="noopener" aria-label="Facebook">Fb</a>
+        <a href="https://pin.it/5ar5LzB8l" target="_blank" rel="noopener" aria-label="Pinterest">Pt</a>
+        <a href="https://www.goodreads.com/author/show/49152576.B_J_Ruffin" target="_blank" rel="noopener" aria-label="Goodreads">Gr</a>
+      </div>
+    </div>
+    <div class="foot-col">
+      <h5>Navigate</h5>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/my-story">My Story</a></li>
+        <li><a href="/library">Library</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/audiobooks">Audiobooks</a></li>
+        <li><a href="/#newsletter">Newsletter</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Shop</h5>
+      <ul>
+        <li><a href="https://www.amazon.com/author/bjruffinstories">Amazon Store</a></li>
+        <li><a href="#TODO-payhip-store" title="TODO: Insert Payhip store URL">Payhip Store</a></li>
+        <li><a href="https://dl.bookfunnel.com/5ak59tk5wf">Free Read</a></li>
+        <li><a href="https://quiz.bjruffin.com/sf/67cf92ee">Take the Quiz</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Connect</h5>
+      <ul>
+        <li><a href="mailto:bj@bjruffin.com">bj@bjruffin.com</a></li>
+        <li><a href="#">Charlotte, NC</a></li>
+        </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 BJ Ruffin · All rights reserved</span>
+    <span><a href="https://www.freeprivacypolicy.com/live/c646f873-2a65-494b-8584-55ae36ba83bc" target="_blank" rel="noopener">Privacy</a></span>
+  </div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(
+    (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); }),
+    { threshold: 0.08 }
+  );
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
