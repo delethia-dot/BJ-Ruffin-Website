@@ -390,7 +390,9 @@
     }
 
     function replaceFeatured(node, p){
-      node.dataset.cat = slugifyCat(p.category);
+      // data-cat carries the raw front-matter category (lowercased) so
+      // the filter can substring-match against it.
+      node.dataset.cat = (p.category || '').toString().toLowerCase();
 
       var art = node.querySelector('.art');
       if (art){
@@ -403,8 +405,10 @@
         }
       }
 
+      // Pill label = "Latest · {Category from front matter}"
+      // — falls back to just "Latest" if the post has no category set.
       var pill = node.querySelector('.pill');
-      if (pill) pill.textContent = 'Latest · ' + (p.category || 'Behind the Scenes');
+      if (pill) pill.textContent = p.category ? ('Latest · ' + p.category) : 'Latest';
 
       var h2 = node.querySelector('h2');
       if (h2) h2.textContent = p.title || p.slug;
@@ -432,7 +436,10 @@
       var a = document.createElement('a');
       a.href = postUrl(p.slug);
       a.className = 'post-card p' + ((idx % 5) + 2); // p2..p6 cycle
-      a.dataset.cat = slugifyCat(p.category);
+      // data-cat carries the raw front-matter category (lowercased) so
+      // the filter substring-matches against the same value the editor
+      // selected from the CMS dropdown.
+      a.dataset.cat = (p.category || '').toString().toLowerCase();
 
       var art = document.createElement('div');
       art.className = 'art';
@@ -443,6 +450,7 @@
       }
       a.appendChild(art);
 
+      // Category label — read straight from the post's front matter.
       var cat = document.createElement('div');
       cat.className = 'cat';
       cat.textContent = p.category || '';

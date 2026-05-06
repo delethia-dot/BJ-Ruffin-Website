@@ -15,6 +15,14 @@ collections:
     fields:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Date", name: "date", widget: "datetime"}
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options:
+          - "Sweet and Clean Romance Spotlight"
+          - "Tropes We Love"
+          - "Behind the Scenes"
+          - "Writing Process"
       - {label: "Draft", name: "draft", widget: "boolean", default: true}
       - {label: "Featured Image", name: "featured_image", widget: "image", required: false}
       - {label: "Body", name: "body", widget: "markdown"}
