@@ -240,12 +240,15 @@
       html += '<p class="byline">' + byline + '</p>';
       html += '</section>';
 
-      // Cover image
+      // Cover image — placeholder mark; we'll insert the real <img>
+      // via DOM after the surrounding HTML is committed, so the src
+      // attribute receives the front-matter path verbatim with no
+      // string-building / escaping in the middle.
+      var coverPlaceholder = '';
       if (p.featured_image){
-        html += '<div class="post-cover">' +
-                  '<img src="' + escapeAttr(p.featured_image) + '" alt="' + escapeAttr(p.title || '') + '" loading="lazy">' +
-                '</div>';
+        coverPlaceholder = '<div class="post-cover" id="post-cover-mount"></div>';
       }
+      html += coverPlaceholder;
 
       // Body — render markdown
       var bodyHtml = '';
@@ -261,6 +264,19 @@
       html += '<div class="post-back"><a href="/blog">← Back to the journal</a></div>';
 
       root.innerHTML = html;
+
+      // Mount the cover <img> via DOM so the src is the literal
+      // front-matter path with no string-build modifications.
+      if (p.featured_image){
+        var mount = document.getElementById('post-cover-mount');
+        if (mount){
+          var img = document.createElement('img');
+          img.src     = p.featured_image;
+          img.alt     = p.title || '';
+          img.loading = 'lazy';
+          mount.appendChild(img);
+        }
+      }
     }
 
     function renderError(headline, detail){

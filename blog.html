@@ -399,9 +399,14 @@
         // remove the static "Featured · Coming Soon" label
         art.innerHTML = '';
         if (p.featured_image){
-          art.style.backgroundImage    = "url('" + String(p.featured_image).replace(/'/g, "%27") + "')";
-          art.style.backgroundSize     = 'cover';
-          art.style.backgroundPosition = 'center';
+          // Use the front-matter path verbatim as the <img> src — no
+          // string transformations, no encoding, no modifications.
+          var img = document.createElement('img');
+          img.src     = p.featured_image;
+          img.alt     = p.title || '';
+          img.loading = 'lazy';
+          img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block';
+          art.appendChild(img);
         }
       }
 
@@ -444,9 +449,14 @@
       var art = document.createElement('div');
       art.className = 'art';
       if (p.featured_image){
-        art.style.backgroundImage    = "url('" + String(p.featured_image).replace(/'/g, "%27") + "')";
-        art.style.backgroundSize     = 'cover';
-        art.style.backgroundPosition = 'center';
+        // Use the front-matter path verbatim as the <img> src — no
+        // string transformations, no encoding, no modifications.
+        var img = document.createElement('img');
+        img.src     = p.featured_image;
+        img.alt     = p.title || '';
+        img.loading = 'lazy';
+        img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block';
+        art.appendChild(img);
       }
       a.appendChild(art);
 
