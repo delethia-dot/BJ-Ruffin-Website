@@ -2,7 +2,7 @@
 title: "Second Chance Romance — Why We Keep Coming Back for More"
 date: 2026-05-06
 draft: true
-featured_image: "https://tempfile.aiquickdraw.com/image-format-converter/1777961897289-rvxzffvsmcc.jpg"
+featured_image: "/images/blog/2026-05-06-second-chance-romance-why-we-keep-coming-back-for-more.jpg"
 category: "Tropes We Love"
 ---
 
