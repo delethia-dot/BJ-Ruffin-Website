@@ -247,11 +247,40 @@
 </footer>
 
 <script>
-  const obs = new IntersectionObserver(
-    (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); }),
-    { threshold: 0.08 }
-  );
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  // Reveal-on-scroll — hardened against the case where the observer
+  // never fires (the .reveal rule in shared/site.css hides content
+  // until .on is added; any failure here would leave the page looking
+  // blank). Three layers of defence:
+  //   1) Wrapped in an IIFE so const declarations can't collide with
+  //      anything else on the page or across browser bfcache restores.
+  //   2) Feature-detect IntersectionObserver — fall back to showing
+  //      everything immediately on browsers that don't support it.
+  //   3) Belt-and-braces: a 1.5s setTimeout that force-adds .on to any
+  //      remaining .reveal sections, no matter what.
+  (function(){
+    var revealEls = document.querySelectorAll('.reveal');
+    function showAll(){
+      revealEls.forEach(function(el){ el.classList.add('on'); });
+    }
+    if (typeof IntersectionObserver !== 'function'){
+      showAll();
+      return;
+    }
+    try {
+      var obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting) e.target.classList.add('on');
+        });
+      }, { threshold: 0.08 });
+      revealEls.forEach(function(el){ obs.observe(el); });
+    } catch (err){
+      // If observer construction throws for any reason, just show.
+      showAll();
+      return;
+    }
+    // Fallback: ensure visibility within 1.5s no matter what.
+    setTimeout(showAll, 1500);
+  })();
 </script>
 
 
