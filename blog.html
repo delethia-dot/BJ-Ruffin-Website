@@ -260,17 +260,31 @@
   .post-card[hidden],.blog-feature[hidden]{display:none !important}
 </style>
 <script>
-  // Filter chips — re-queries .post-card on each click so it picks up
-  // any cards rendered later by the GitHub-fetch loader below.
+  // Filter chips — case-insensitive keyword match.
+  // Each chip's data-cat (e.g. "behind", "spotlight", "process", "tropes")
+  // is matched as a substring against each card/feature's data-cat,
+  // both lowercased. This way placeholder cards (data-cat="behind")
+  // AND dynamic real posts (data-cat="behind-the-scenes" from a
+  // slugified "Behind the Scenes") both surface under the same chip,
+  // even if the CMS author types the category differently.
+  // Re-queries .post-card on each click so it picks up cards rendered
+  // later by the GitHub-fetch loader below.
   (function(){
     var chips = document.querySelectorAll('#blog-cats .chip');
+    function matches(chipCat, elemCat){
+      var c = (chipCat || '').toLowerCase().trim();
+      if (c === 'all' || c === '') return true;
+      var e = (elemCat || '').toLowerCase();
+      if (!e) return false;
+      return e.indexOf(c) !== -1;
+    }
     function applyCat(cat){
       document.querySelectorAll('.post-card').forEach(function(c){
-        c.hidden = (cat !== 'all' && c.dataset.cat !== cat);
+        c.hidden = !matches(cat, c.dataset.cat);
       });
       var feature = document.querySelector('.blog-feature');
       if (feature){
-        feature.hidden = (cat !== 'all' && feature.dataset.cat !== cat);
+        feature.hidden = !matches(cat, feature.dataset.cat);
       }
     }
     chips.forEach(function(chip){
