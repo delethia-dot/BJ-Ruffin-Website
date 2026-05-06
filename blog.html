@@ -260,15 +260,16 @@
   .post-card[hidden],.blog-feature[hidden]{display:none !important}
 </style>
 <script>
+  // Filter chips — re-queries .post-card on each click so it picks up
+  // any cards rendered later by the GitHub-fetch loader below.
   (function(){
     var chips = document.querySelectorAll('#blog-cats .chip');
-    var cards = document.querySelectorAll('.post-card');
-    var feature = document.querySelector('.blog-feature');
     function applyCat(cat){
-      cards.forEach(function(c){
+      document.querySelectorAll('.post-card').forEach(function(c){
         c.hidden = (cat !== 'all' && c.dataset.cat !== cat);
       });
-      if(feature){
+      var feature = document.querySelector('.blog-feature');
+      if (feature){
         feature.hidden = (cat !== 'all' && feature.dataset.cat !== cat);
       }
     }
@@ -279,6 +280,144 @@
         applyCat(chip.dataset.cat);
       });
     });
+  })();
+</script>
+
+<!--
+  ============================================================
+  Dynamic blog post loader
+  Pulls published markdown posts from the `content/blog` folder
+  on the `preview` branch of github.com/delethia-dot/BJ-Ruffin-Website
+  via the public GitHub API. If posts exist and at least one has
+  draft:false, it replaces the Coming Soon placeholders. Otherwise
+  the existing Coming Soon content is left in place.
+  ============================================================
+-->
+<script>
+  (function(){
+    var REPO   = 'delethia-dot/BJ-Ruffin-Website';
+    var BRANCH = 'preview';
+    var FOLDER = 'content/blog';
+
+    var grid    = document.querySelector('.blog-grid');
+    var feature = document.querySelector('.blog-feature');
+    if (!grid) return;
+
+    fetch('https://api.github.com/repos/' + REPO + '/contents/' + FOLDER + '?ref=' + BRANCH)
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(list){
+        if (!Array.isArray(list)) return;
+        var mdFiles = list.filter(function(f){
+          return f.type === 'file' && /\.md$/i.test(f.name);
+        });
+        if (!mdFiles.length) return;
+
+        return Promise.all(mdFiles.map(function(f){
+          return fetch(f.download_url)
+            .then(function(r){ return r.ok ? r.text() : ''; })
+            .then(function(raw){
+              var parsed = parseFrontMatter(raw);
+              parsed.slug = f.name.replace(/\.md$/i, '');
+              return parsed;
+            })
+            .catch(function(){ return null; });
+        }));
+      })
+      .then(function(posts){
+        if (!Array.isArray(posts)) return;
+        var published = posts.filter(function(p){
+          return p && p.draft === false;
+        });
+        if (!published.length) return;
+
+        published.sort(function(a, b){
+          return new Date(b.date || 0) - new Date(a.date || 0);
+        });
+
+        // Replace placeholders with real posts
+        if (feature) feature.style.display = 'none';
+        grid.innerHTML = '';
+        published.forEach(function(p, i){ grid.appendChild(renderCard(p, i)); });
+      })
+      .catch(function(){ /* swallow — leave placeholders */ });
+
+    // ---- helpers ----
+    function parseFrontMatter(raw){
+      var m = /^---\s*\n([\s\S]*?)\n---\s*\n?([\s\S]*)$/.exec(raw || '');
+      if (!m) return { body: raw || '', draft: true };
+      var fm = {};
+      m[1].split('\n').forEach(function(line){
+        var lm = /^(\w+):\s*(.*)$/.exec(line);
+        if (!lm) return;
+        var v = lm[2].trim();
+        if ((v.charAt(0) === '"' && v.slice(-1) === '"') ||
+            (v.charAt(0) === "'" && v.slice(-1) === "'")) v = v.slice(1,-1);
+        if (v === 'true')  v = true;
+        else if (v === 'false') v = false;
+        fm[lm[1]] = v;
+      });
+      fm.body = m[2] || '';
+      return fm;
+    }
+
+    function renderCard(p, idx){
+      var a = document.createElement('a');
+      a.href = '/blog/' + encodeURIComponent(p.slug) + '/';
+      a.className = 'post-card p' + ((idx % 5) + 2); // p2..p6 cycle
+      a.dataset.cat = (p.category || '')
+        .toString().toLowerCase().trim().replace(/\s+/g, '-');
+
+      var art = document.createElement('div');
+      art.className = 'art';
+      if (p.featured_image){
+        art.style.backgroundImage    = "url('" + String(p.featured_image).replace(/'/g, "%27") + "')";
+        art.style.backgroundSize     = 'cover';
+        art.style.backgroundPosition = 'center';
+      }
+      a.appendChild(art);
+
+      var cat = document.createElement('div');
+      cat.className = 'cat';
+      cat.textContent = p.category || '';
+      a.appendChild(cat);
+
+      var h3 = document.createElement('h3');
+      h3.textContent = p.title || p.slug;
+      a.appendChild(h3);
+
+      var excerpt = document.createElement('p');
+      excerpt.className = 'excerpt';
+      excerpt.textContent = excerptFrom(p.body);
+      a.appendChild(excerpt);
+
+      var when = document.createElement('div');
+      when.className = 'when';
+      when.textContent = formatDate(p.date);
+      a.appendChild(when);
+
+      return a;
+    }
+
+    function excerptFrom(body){
+      if (!body) return '';
+      var txt = body
+        .replace(/^---[\s\S]*?---\s*/, '')
+        .replace(/^#+\s+/gm, '')
+        .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
+        .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+        .replace(/\*\*|__|\*|_/g, '')
+        .replace(/`+/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+      return txt.length > 160 ? txt.slice(0, 160).trim() + '…' : txt;
+    }
+
+    function formatDate(d){
+      if (!d) return '';
+      var date = new Date(d);
+      if (isNaN(date.getTime())) return '';
+      return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    }
   })();
 </script>
 </body>
