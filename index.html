@@ -1057,6 +1057,8 @@
     ml('account', '353292');
 </script>
 <!-- End MailerLite Universal -->
+<!-- Netlify Identity widget -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
 
@@ -1464,6 +1466,19 @@
     { threshold: 0.08 }
   );
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+<!-- Redirect to /admin after Netlify Identity login -->
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => {
+          document.location.href = "/admin/";
+        });
+      }
+    });
+  }
 </script>
 
 </body>
