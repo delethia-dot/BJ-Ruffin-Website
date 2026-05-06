@@ -181,8 +181,8 @@
 
 <section style="background:var(--plum);padding:80px 32px;text-align:center;color:var(--rose-tint)">
   <div style="max-width:680px;margin:0 auto">
-    <div style="font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);margin-bottom:18px">Be the first to read</div>
-    <h2 style="font-family:var(--serif);font-size:clamp(32px,4vw,52px);font-weight:300;line-height:1.05;letter-spacing:-.02em;color:var(--paper);margin-bottom:18px;font-variation-settings:'opsz' 144">First posts drop <em style="color:var(--rose);font-style:italic">launch week.</em></h2>
+    <div style="font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);margin-bottom:18px">Subscribe to the journal</div>
+    <h2 style="font-family:var(--serif);font-size:clamp(32px,4vw,52px);font-weight:300;line-height:1.05;letter-spacing:-.02em;color:var(--paper);margin-bottom:18px;font-variation-settings:'opsz' 144">New posts drop every <em style="color:var(--rose);font-style:italic">week.</em></h2>
     <p style="font-family:var(--serif);font-style:italic;font-size:18px;color:var(--rose-soft);margin-bottom:32px">Subscribe to the reader letter and every new essay lands in your inbox before it's anywhere else. Always sweet. Never spam.</p>
     <a href="/#newsletter" class="btn" style="background:var(--rose);color:var(--plum-deep)">Join the Letter <span class="arrow">→</span></a>
   </div>
@@ -287,10 +287,17 @@
   ============================================================
   Dynamic blog post loader
   Pulls published markdown posts from the `content/blog` folder
-  on the `preview` branch of github.com/delethia-dot/BJ-Ruffin-Website
-  via the public GitHub API. If posts exist and at least one has
-  draft:false, it replaces the Coming Soon placeholders. Otherwise
-  the existing Coming Soon content is left in place.
+  on the `preview` branch of github.com/delethiadot/BJ-Ruffin-Website
+  via the public GitHub API.
+
+  Layout pattern: 1 featured + 6-card grid, ALWAYS.
+    • Newest published post → fills the .blog-feature slot
+    • Next up to 6 published posts → fill grid slots from the top
+    • Any remaining grid slots keep their original Coming Soon
+      placeholder content so the page always feels complete.
+
+  Card links go to /post.html?slug={slug} — see post.html for the
+  individual-post renderer.
   ============================================================
 -->
 <script>
@@ -325,19 +332,23 @@
       })
       .then(function(posts){
         if (!Array.isArray(posts)) return;
-        var published = posts.filter(function(p){
-          return p && p.draft === false;
-        });
-        if (!published.length) return;
+        var published = posts.filter(function(p){ return p && p.draft === false; });
+        if (!published.length) return; // leave all Coming Soon placeholders
 
         published.sort(function(a, b){
           return new Date(b.date || 0) - new Date(a.date || 0);
         });
 
-        // Replace placeholders with real posts
-        if (feature) feature.style.display = 'none';
-        grid.innerHTML = '';
-        published.forEach(function(p, i){ grid.appendChild(renderCard(p, i)); });
+        // 1) Featured = newest published post
+        if (feature) replaceFeatured(feature, published[0]);
+
+        // 2) Up to 6 grid cards from remaining published posts.
+        //    Remaining placeholders stay in place so grid is always full.
+        var remaining = published.slice(1, 7);
+        var slots = grid.querySelectorAll('.post-card');
+        for (var i = 0; i < remaining.length && i < slots.length; i++){
+          slots[i].replaceWith(renderCard(remaining[i], i));
+        }
       })
       .catch(function(){ /* swallow — leave placeholders */ });
 
@@ -360,12 +371,54 @@
       return fm;
     }
 
+    function postUrl(slug){
+      return '/post.html?slug=' + encodeURIComponent(slug);
+    }
+
+    function replaceFeatured(node, p){
+      node.dataset.cat = slugifyCat(p.category);
+
+      var art = node.querySelector('.art');
+      if (art){
+        // remove the static "Featured · Coming Soon" label
+        art.innerHTML = '';
+        if (p.featured_image){
+          art.style.backgroundImage    = "url('" + String(p.featured_image).replace(/'/g, "%27") + "')";
+          art.style.backgroundSize     = 'cover';
+          art.style.backgroundPosition = 'center';
+        }
+      }
+
+      var pill = node.querySelector('.pill');
+      if (pill) pill.textContent = 'Latest · ' + (p.category || 'Behind the Scenes');
+
+      var h2 = node.querySelector('h2');
+      if (h2) h2.textContent = p.title || p.slug;
+
+      var paragraphs = node.querySelectorAll('p');
+      var byline    = node.querySelector('.byline');
+      var bodyPara  = null;
+      paragraphs.forEach(function(pp){ if (!pp.classList.contains('byline')) bodyPara = pp; });
+
+      if (byline){
+        byline.innerHTML = 'Posted <b>' + escapeHtml(formatDate(p.date)) + '</b> · By BJ Ruffin';
+      }
+      if (bodyPara){
+        bodyPara.textContent = excerptFrom(p.body, 280);
+      }
+
+      var read = node.querySelector('a.read');
+      if (read){
+        read.href = postUrl(p.slug);
+        read.textContent = 'Read the post →';
+      }
+    }
+
     function renderCard(p, idx){
       var a = document.createElement('a');
-      a.href = '/blog/' + encodeURIComponent(p.slug) + '/';
+      a.href = postUrl(p.slug);
       a.className = 'post-card p' + ((idx % 5) + 2); // p2..p6 cycle
-      a.dataset.cat = (p.category || '')
-        .toString().toLowerCase().trim().replace(/\s+/g, '-');
+      a.dataset.cat = slugifyCat(p.category);
 
       var art = document.createElement('div');
       art.className = 'art';
@@ -387,7 +440,7 @@
 
       var excerpt = document.createElement('p');
       excerpt.className = 'excerpt';
-      excerpt.textContent = excerptFrom(p.body);
+      excerpt.textContent = excerptFrom(p.body, 160);
       a.appendChild(excerpt);
 
       var when = document.createElement('div');
@@ -398,7 +451,11 @@
       return a;
     }
 
-    function excerptFrom(body){
+    function slugifyCat(cat){
+      return (cat || '').toString().toLowerCase().trim().replace(/\s+/g, '-');
+    }
+
+    function excerptFrom(body, max){
       if (!body) return '';
       var txt = body
         .replace(/^---[\s\S]*?---\s*/, '')
@@ -409,7 +466,7 @@
         .replace(/`+/g, '')
         .replace(/\s+/g, ' ')
         .trim();
-      return txt.length > 160 ? txt.slice(0, 160).trim() + '…' : txt;
+      return txt.length > max ? txt.slice(0, max).trim() + '…' : txt;
     }
 
     function formatDate(d){
@@ -417,6 +474,12 @@
       var date = new Date(d);
       if (isNaN(date.getTime())) return '';
       return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    }
+
+    function escapeHtml(s){
+      return String(s).replace(/[&<>"']/g, function(c){
+        return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+      });
     }
   })();
 </script>

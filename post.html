@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BJ Ruffin · Post</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/site.css">
+<style>
+  /* Post page styles — match the brand language used throughout the site */
+  .post-hero{max-width:760px;margin:0 auto;padding:80px 32px 24px}
+  .post-hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);margin-bottom:24px;display:flex;gap:14px;align-items:center}
+  .post-hero .eyebrow::before{content:'';width:28px;height:1px;background:var(--rose)}
+  .post-hero h1{font-family:var(--serif);font-size:clamp(42px,5.5vw,72px);font-weight:300;line-height:1;letter-spacing:-.02em;color:var(--ink);font-variation-settings:"opsz" 144;margin-bottom:24px;text-wrap:balance}
+  .post-hero h1 em{font-style:italic;color:var(--plum);font-weight:400}
+  .post-hero .byline{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint)}
+  .post-hero .byline b{color:var(--plum);font-weight:500}
+
+  .post-cover{max-width:980px;margin:32px auto 48px;padding:0 32px}
+  .post-cover img{width:100%;height:auto;border-radius:3px;box-shadow:0 30px 80px -30px rgba(90,47,58,.25);display:block}
+
+  .post-body{max-width:680px;margin:0 auto;padding:0 32px 96px;font-family:var(--serif);font-size:19px;line-height:1.7;color:var(--ink);text-wrap:pretty}
+  .post-body > :first-child{margin-top:0}
+  .post-body > :last-child{margin-bottom:0}
+  .post-body p{margin:0 0 1.5em;text-wrap:pretty}
+  .post-body p em{font-style:italic;color:var(--plum)}
+  .post-body h2{font-family:var(--serif);font-size:32px;font-weight:300;line-height:1.15;letter-spacing:-.01em;color:var(--ink);font-variation-settings:"opsz" 144;margin:2.4em 0 .6em}
+  .post-body h2 em{font-style:italic;color:var(--plum)}
+  .post-body h3{font-family:var(--serif);font-size:24px;font-weight:400;line-height:1.2;color:var(--ink);margin:1.8em 0 .5em}
+  .post-body blockquote{font-family:var(--serif);font-style:italic;font-size:24px;line-height:1.4;color:var(--plum);border-left:2px solid var(--rose);padding:6px 0 6px 24px;margin:1.8em 0}
+  .post-body ul,.post-body ol{margin:0 0 1.5em 1.4em;padding:0}
+  .post-body li{margin-bottom:.5em}
+  .post-body a{color:var(--plum);border-bottom:1px solid var(--rule);transition:border-color .25s}
+  .post-body a:hover{border-bottom-color:var(--plum)}
+  .post-body strong{font-weight:500;color:var(--ink)}
+  .post-body img{max-width:100%;height:auto;display:block;margin:2em auto;border-radius:3px}
+  .post-body code{font-family:var(--mono);font-size:.92em;background:var(--ivory);padding:1px 6px;border-radius:3px}
+  .post-body pre{font-family:var(--mono);font-size:14px;background:var(--ivory);padding:18px 20px;border-radius:4px;overflow-x:auto;margin:1.8em 0;border:1px solid var(--rule)}
+  .post-body pre code{background:none;padding:0}
+  .post-body hr{border:none;border-top:1px solid var(--rule);margin:2.4em auto;width:64px}
+
+  .post-back{max-width:680px;margin:0 auto;padding:0 32px 80px}
+  .post-back a{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--plum);border-bottom:1px solid var(--plum);padding-bottom:4px}
+
+  .post-state{max-width:680px;margin:0 auto;padding:120px 32px;text-align:center;font-family:var(--serif);font-style:italic;font-size:22px;color:var(--ink-soft);line-height:1.5}
+  .post-state .eyebrow{font-family:var(--mono);font-style:normal;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);margin-bottom:16px}
+  .post-state a{color:var(--plum);border-bottom:1px solid var(--rule)}
+</style>
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '353292');
+</script>
+<!-- End MailerLite Universal -->
+</head>
+<body>
+
+<!-- TOP STRIP -->
+<div class="top-strip">
+  <span>VOL. 04 · ISSUE 02 · SPRING 2026</span>
+  <div class="ticker"><div class="ticker-track">
+    <span>NEW SERIES — HEARTS OF SUGAR SPRINGS · OUT NOW</span>
+    <span>FREE READ — A BLOSSOMING LOVE</span>
+    <span>NEW SERIES — HEARTS OF SUGAR SPRINGS · OUT NOW</span>
+    <span>FREE READ — A BLOSSOMING LOVE</span>
+  </div></div>
+  <a href="mailto:bj@bjruffin.com">bj@bjruffin.com</a>
+</div>
+
+<!-- NAV -->
+<nav class="site">
+  <div class="nav-grid">
+    <div class="nav-left">
+      <a href="/library" class="nav-link">Library</a>
+      <a href="/my-story" class="nav-link">My Story</a>
+      <a href="/blog" class="nav-link">Blog</a>
+      <a href="/audiobooks" class="nav-link">Audiobooks <span style="opacity:.55;font-size:.78em;letter-spacing:.05em">(coming soon)</span></a>
+    </div>
+    <a href="/" class="brand" aria-label="BJ Ruffin Stories">
+      <svg viewBox="0 0 300 135" xmlns="http://www.w3.org/2000/svg">
+        <path class="chev" d="M126 33 L150 50 L174 33"></path>
+        <circle class="dot" cx="150" cy="40" r="4.5"></circle>
+        <line class="rule" x1="150" y1="50" x2="150" y2="60" stroke-width="1.2" opacity=".25"></line>
+        <text class="wordmark" x="150" y="93" text-anchor="middle">BJ Ruffin</text>
+        <line class="rule" x1="68" y1="102" x2="100" y2="102"></line>
+        <line class="rule" x1="200" y1="102" x2="232" y2="102"></line>
+        <text class="stories" x="150" y="118" text-anchor="middle">STORIES</text>
+      </svg>
+    </a>
+    <div class="nav-right">
+      <a href="/#newsletter" class="nav-link">Newsletter</a>
+      <a href="https://quiz.bjruffin.com/sf/67cf92ee" class="nav-link">Quiz</a>
+      <a href="https://dl.bookfunnel.com/5ak59tk5wf" class="nav-cta">Free Read</a>
+    </div>
+  </div>
+</nav>
+
+<!-- POST CONTENT — populated by JS below -->
+<article id="post-root">
+  <div class="post-state" id="post-loading">
+    <div class="eyebrow">Loading</div>
+    Pulling the post from the journal…
+  </div>
+</article>
+
+<!-- BACK LINK + FOOTER CTA strip in brand voice -->
+<section style="background:var(--plum);padding:80px 32px;text-align:center;color:var(--rose-tint)">
+  <div style="max-width:680px;margin:0 auto">
+    <div style="font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);margin-bottom:18px">Subscribe to the journal</div>
+    <h2 style="font-family:var(--serif);font-size:clamp(32px,4vw,52px);font-weight:300;line-height:1.05;letter-spacing:-.02em;color:var(--paper);margin-bottom:18px;font-variation-settings:'opsz' 144">New posts drop every <em style="color:var(--rose);font-style:italic">week.</em></h2>
+    <p style="font-family:var(--serif);font-style:italic;font-size:18px;color:var(--rose-soft);margin-bottom:32px">Subscribe to the reader letter and every new essay lands in your inbox before it's anywhere else. Always sweet. Never spam.</p>
+    <a href="/#newsletter" class="btn" style="background:var(--rose);color:var(--plum-deep)">Join the Letter <span class="arrow">→</span></a>
+  </div>
+</section>
+
+<!-- FOOTER (matches every other page) -->
+<footer>
+  <div class="foot-inner">
+    <div>
+      <div class="foot-brand">
+        <svg viewBox="0 0 300 135" xmlns="http://www.w3.org/2000/svg" style="height:80px;width:auto;display:block">
+          <path d="M126 33 L150 50 L174 33" stroke="#DCA1A8" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+          <circle cx="150" cy="40" r="4.5" fill="#DCA1A8" opacity="0.5"></circle>
+          <line x1="150" y1="50" x2="150" y2="60" stroke="#DCA1A8" stroke-width="1.2" opacity="0.3"></line>
+          <text x="150" y="93" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="38" font-weight="400" fill="#FBF7F2" letter-spacing="3">BJ Ruffin</text>
+          <line x1="68" y1="102" x2="100" y2="102" stroke="#DCA1A8" stroke-width="0.8" opacity="0.4"></line>
+          <line x1="200" y1="102" x2="232" y2="102" stroke="#DCA1A8" stroke-width="0.8" opacity="0.4"></line>
+          <text x="150" y="118" text-anchor="middle" font-family="DM Mono, monospace" font-size="11" fill="#DCA1A8" letter-spacing="8" font-weight="400">STORIES</text>
+        </svg>
+      </div>
+      <p class="foot-desc">Sweet, clean romances about love, family, and the resilience of the human spirit — from the mountains of Vermont to the ranches of Sugar Springs.</p>
+      <div class="foot-social">
+        <a href="https://instagram.com/bjruffinauthor?igshid=MzNlNGNkZWQ4Mg==" target="_blank" rel="noopener" aria-label="Instagram">Ig</a>
+        <a href="https://www.facebook.com/bjruffinromance/" target="_blank" rel="noopener" aria-label="Facebook">Fb</a>
+        <a href="https://pin.it/5ar5LzB8l" target="_blank" rel="noopener" aria-label="Pinterest">Pt</a>
+        <a href="https://www.goodreads.com/author/show/49152576.B_J_Ruffin" target="_blank" rel="noopener" aria-label="Goodreads">Gr</a>
+      </div>
+    </div>
+    <div class="foot-col">
+      <h5>Navigate</h5>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/my-story">My Story</a></li>
+        <li><a href="/library">Library</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/audiobooks">Audiobooks</a></li>
+        <li><a href="/#newsletter">Newsletter</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Shop</h5>
+      <ul>
+        <li><a href="https://www.amazon.com/author/bjruffinstories">Amazon Store</a></li>
+        <li><a href="#TODO-payhip-store" title="TODO: Insert Payhip store URL">Payhip Store</a></li>
+        <li><a href="https://dl.bookfunnel.com/5ak59tk5wf">Free Read</a></li>
+        <li><a href="https://quiz.bjruffin.com/sf/67cf92ee">Take the Quiz</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Connect</h5>
+      <ul>
+        <li><a href="mailto:bj@bjruffin.com">bj@bjruffin.com</a></li>
+        <li><a href="#">Charlotte, NC</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 BJ Ruffin · All rights reserved</span>
+    <span><a href="https://www.freeprivacypolicy.com/live/c646f873-2a65-494b-8584-55ae36ba83bc" target="_blank" rel="noopener">Privacy</a></span>
+  </div>
+</footer>
+
+<!-- Markdown renderer (~30 KB) -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<!--
+  =============================================================
+  Individual post renderer
+  Reads ?slug=... from the URL, fetches the matching markdown
+  file from content/blog/{slug}.md on the `preview` branch of
+  the GitHub repo, parses front matter, and renders the body
+  using marked.js with the brand styling defined above.
+  =============================================================
+-->
+<script>
+  (function(){
+    var REPO   = 'delethia-dot/BJ-Ruffin-Website';
+    var BRANCH = 'preview';
+    var FOLDER = 'content/blog';
+
+    var root = document.getElementById('post-root');
+    var slug = new URLSearchParams(window.location.search).get('slug');
+
+    if (!slug){
+      renderError('No post specified.', 'Pick a post from <a href="/blog">the blog index</a>.');
+      return;
+    }
+
+    // GitHub raw URL for the markdown file (no API rate-limit, faster)
+    var rawUrl = 'https://raw.githubusercontent.com/' + REPO + '/' + BRANCH +
+                 '/' + FOLDER + '/' + encodeURIComponent(slug) + '.md';
+
+    fetch(rawUrl)
+      .then(function(r){
+        if (!r.ok) throw new Error('Not found (' + r.status + ')');
+        return r.text();
+      })
+      .then(function(raw){
+        var parsed = parseFrontMatter(raw);
+        if (parsed.draft === true){
+          renderError('This post isn’t published yet.',
+                      'It’s still a draft. Check back soon, or <a href="/blog">browse the journal</a>.');
+          return;
+        }
+        renderPost(parsed);
+      })
+      .catch(function(){
+        renderError('Post not found.',
+                    'The link may have changed. <a href="/blog">Back to the journal &rarr;</a>');
+      });
+
+    function renderPost(p){
+      document.title = (p.title || 'Post') + ' · BJ Ruffin Stories';
+
+      var html = '';
+
+      // Hero
+      html += '<section class="post-hero">';
+      if (p.category){
+        html += '<div class="eyebrow">' + escapeHtml(p.category) + '</div>';
+      }
+      html += '<h1>' + escapeHtml(p.title || 'Untitled') + '</h1>';
+      var byline = '';
+      if (p.date) byline += 'Posted <b>' + escapeHtml(formatDate(p.date)) + '</b>';
+      byline += (byline ? ' · ' : '') + 'By BJ Ruffin';
+      html += '<p class="byline">' + byline + '</p>';
+      html += '</section>';
+
+      // Cover image
+      if (p.featured_image){
+        html += '<div class="post-cover">' +
+                  '<img src="' + escapeAttr(p.featured_image) + '" alt="' + escapeAttr(p.title || '') + '" loading="lazy">' +
+                '</div>';
+      }
+
+      // Body — render markdown
+      var bodyHtml = '';
+      try {
+        marked.use({ mangle: false, headerIds: false });
+        bodyHtml = marked.parse(p.body || '');
+      } catch(e){
+        bodyHtml = '<p>' + escapeHtml(p.body || '') + '</p>';
+      }
+      html += '<section class="post-body">' + bodyHtml + '</section>';
+
+      // Back link
+      html += '<div class="post-back"><a href="/blog">← Back to the journal</a></div>';
+
+      root.innerHTML = html;
+    }
+
+    function renderError(headline, detail){
+      root.innerHTML =
+        '<div class="post-state">' +
+          '<div class="eyebrow">' + escapeHtml(headline) + '</div>' +
+          detail +
+        '</div>';
+    }
+
+    // ---- helpers ----
+    function parseFrontMatter(raw){
+      var m = /^---\s*\n([\s\S]*?)\n---\s*\n?([\s\S]*)$/.exec(raw || '');
+      if (!m) return { body: raw || '', draft: true };
+      var fm = {};
+      m[1].split('\n').forEach(function(line){
+        var lm = /^(\w+):\s*(.*)$/.exec(line);
+        if (!lm) return;
+        var v = lm[2].trim();
+        if ((v.charAt(0) === '"' && v.slice(-1) === '"') ||
+            (v.charAt(0) === "'" && v.slice(-1) === "'")) v = v.slice(1,-1);
+        if (v === 'true')  v = true;
+        else if (v === 'false') v = false;
+        fm[lm[1]] = v;
+      });
+      fm.body = m[2] || '';
+      return fm;
+    }
+
+    function formatDate(d){
+      if (!d) return '';
+      var date = new Date(d);
+      if (isNaN(date.getTime())) return '';
+      return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    }
+
+    function escapeHtml(s){
+      return String(s).replace(/[&<>"']/g, function(c){
+        return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+      });
+    }
+    function escapeAttr(s){ return escapeHtml(s); }
+  })();
+</script>
+
+<!-- Netlify Identity widget (so Identity-aware pages keep working from here) -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => { document.location.href = "/admin/"; });
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
