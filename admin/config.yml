@@ -1,7 +1,12 @@
 backend:
   name: git-gateway
   repo: delethia-dot/BJ-Ruffin-Website
-  branch: main
+  # Site reads from `preview`; CMS must write to the same branch so
+  # the Publish button puts posts where the site can find them.
+  branch: preview
+
+# Editorial workflow is intentionally NOT enabled — the standard
+# Save/Publish action commits straight to the configured branch.
 
 media_folder: "images/blog"
 public_folder: "/images/blog"
@@ -23,6 +28,13 @@ collections:
           - "Tropes We Love"
           - "Behind the Scenes"
           - "Writing Process"
-      - {label: "Draft", name: "draft", widget: "boolean", default: true}
+      # Draft is a HIDDEN field — Netlify CMS does not have a hook to
+      # toggle a visible boolean on Publish, so we instead default
+      # every new post to `draft: false`. Clicking Publish in the
+      # admin panel saves the post and it appears on the site
+      # immediately. To keep a post offline, leave it as a
+      # CMS workflow draft (don't click Publish), or hand-edit the
+      # markdown to set `draft: true`.
+      - {label: "Draft", name: "draft", widget: "hidden", default: false}
       - {label: "Featured Image", name: "featured_image", widget: "image", required: false}
       - {label: "Body", name: "body", widget: "markdown"}

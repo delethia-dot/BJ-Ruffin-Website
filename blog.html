@@ -375,7 +375,10 @@
       })
       .then(function(posts){
         if (!Array.isArray(posts)) return;
-        var published = posts.filter(function(p){ return p && p.draft === false; });
+        // Treat anything not explicitly flagged draft:true as published.
+        // The CMS writes draft:false by default (hidden field in
+        // admin/config.yml), so this matches the publish-from-CMS flow.
+        var published = posts.filter(function(p){ return p && p.draft !== true; });
         if (!published.length) return; // leave all Coming Soon placeholders
 
         published.sort(function(a, b){
