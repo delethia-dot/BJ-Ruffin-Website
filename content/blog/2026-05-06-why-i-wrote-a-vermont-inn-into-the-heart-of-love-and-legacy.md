@@ -1,9 +1,9 @@
 ---
-title: "Why I Wrote a Vermont Inn Into the Heart of Love and Legacy"
+title: Why I Wrote a Vermont Inn Into the Heart of Love and Legacy
 date: 2026-05-06
-draft: true
-featured_image: "/images/blog/2026-05-06-why-i-wrote-a-vermont-inn-into-the-heart-of-love-and-legacy.jpg"
-category: "Behind the Scenes"
+category: Behind the Scenes
+draft: false
+featured_image: /images/blog/2026-05-06-why-i-wrote-a-vermont-inn-into-the-heart-of-love-and-legacy.jpg
 ---
 
 The Maple Grove Inn was never supposed to be just a setting.
