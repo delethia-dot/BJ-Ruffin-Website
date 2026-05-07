@@ -385,15 +385,49 @@
           return new Date(b.date || 0) - new Date(a.date || 0);
         });
 
-        // 1) Featured = newest published post
+        // 1) Featured = newest published post (never changes on Load More).
         if (feature) replaceFeatured(feature, published[0]);
 
-        // 2) Up to 6 grid cards from remaining published posts.
-        //    Remaining placeholders stay in place so grid is always full.
-        var remaining = published.slice(1, 7);
+        // 2) First batch of grid cards: up to 6 from remaining published posts.
+        //    Remaining placeholders stay in place so grid always feels full.
+        var BATCH_SIZE = 6;
+        var firstBatch = published.slice(1, 1 + BATCH_SIZE);
         var slots = grid.querySelectorAll('.post-card');
-        for (var i = 0; i < remaining.length && i < slots.length; i++){
-          slots[i].replaceWith(renderCard(remaining[i], i));
+        for (var i = 0; i < firstBatch.length && i < slots.length; i++){
+          slots[i].replaceWith(renderCard(firstBatch[i], i));
+        }
+
+        // 3) Load More — only if more posts exist beyond the first
+        //    featured + 6 batch. Each click appends the next 6 posts.
+        //    Featured slot is untouched. When all posts are loaded the
+        //    button removes itself.
+        if (published.length > 1 + BATCH_SIZE){
+          var renderedCount = firstBatch.length; // grid cards already shown
+          var wrap = document.createElement('div');
+          wrap.className = 'load-more-wrap';
+          wrap.style.cssText = 'max-width:1440px;margin:0 auto;padding:8px 32px 80px;text-align:center';
+
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'btn btn-ghost';
+          btn.style.cursor = 'pointer';
+          btn.innerHTML = 'Load more posts <span class="arrow">→</span>';
+          wrap.appendChild(btn);
+
+          grid.parentNode.insertBefore(wrap, grid.nextSibling);
+
+          btn.addEventListener('click', function(){
+            var start = 1 + renderedCount;       // skip featured + already-rendered
+            var batch = published.slice(start, start + BATCH_SIZE);
+            batch.forEach(function(p, j){
+              grid.appendChild(renderCard(p, renderedCount + j));
+            });
+            renderedCount += batch.length;
+            // Remove button if no posts remain
+            if (1 + renderedCount >= published.length){
+              wrap.remove();
+            }
+          });
         }
       })
       .catch(function(){ /* swallow — leave placeholders */ });
