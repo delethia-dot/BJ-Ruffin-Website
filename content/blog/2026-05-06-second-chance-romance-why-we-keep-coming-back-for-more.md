@@ -1,9 +1,9 @@
 ---
-title: "Second Chance Romance — Why We Keep Coming Back for More"
+title: Second Chance Romance — Why We Keep Coming Back for More
 date: 2026-05-06
-draft: false
-featured_image: "/images/blog/2026-05-06-second-chance-romance-why-we-keep-coming-back-for-more.jpg"
-category: "Tropes We Love"
+category: Tropes We Love
+draft: true
+featured_image: /images/blog/2026-05-06-second-chance-romance-why-we-keep-coming-back-for-more.jpg
 ---
 
 There is something about watching two people find their way back to each other that makes the rest of the world feel possible again.
