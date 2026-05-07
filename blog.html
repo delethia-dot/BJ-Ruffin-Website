@@ -363,14 +363,30 @@
         if (!mdFiles.length) return;
 
         return Promise.all(mdFiles.map(function(f){
-          return fetch(f.download_url)
-            .then(function(r){ return r.ok ? r.text() : ''; })
-            .then(function(raw){
-              var parsed = parseFrontMatter(raw);
-              parsed.slug = f.name.replace(/\.md$/i, '');
-              return parsed;
-            })
-            .catch(function(){ return null; });
+          // Two parallel fetches per file:
+          //   1) the raw markdown for front-matter parsing
+          //   2) the most recent commit that touched this exact file,
+          //      used as a tie-breaker when two posts share a `date`.
+          //      The Contents API doesn't carry timestamps, so we
+          //      hit /commits?path=... per file (capped to 1 result).
+          var contentP = fetch(f.download_url)
+            .then(function(r){ return r.ok ? r.text() : ''; });
+          var commitsUrl = 'https://api.github.com/repos/' + REPO +
+                           '/commits?sha=' + BRANCH +
+                           '&path=' + encodeURIComponent(FOLDER + '/' + f.name) +
+                           '&per_page=1';
+          var commitP = fetch(commitsUrl)
+            .then(function(r){ return r.ok ? r.json() : []; })
+            .catch(function(){ return []; });
+          return Promise.all([contentP, commitP]).then(function(results){
+            var parsed = parseFrontMatter(results[0]);
+            parsed.slug = f.name.replace(/\.md$/i, '');
+            var commit = (results[1] && results[1][0] && results[1][0].commit) || null;
+            parsed._committedAt = (commit && commit.committer && commit.committer.date) ||
+                                  (commit && commit.author    && commit.author.date)    ||
+                                  null;
+            return parsed;
+          }).catch(function(){ return null; });
         }));
       })
       .then(function(posts){
@@ -382,7 +398,13 @@
         if (!published.length) return; // leave all Coming Soon placeholders
 
         published.sort(function(a, b){
-          return new Date(b.date || 0) - new Date(a.date || 0);
+          // Primary key: the front-matter `date` (newest first).
+          var dDiff = new Date(b.date || 0) - new Date(a.date || 0);
+          if (dDiff !== 0) return dDiff;
+          // Tie-breaker: when two posts share a date, the post that
+          // was most recently committed to GitHub appears first
+          // (and therefore takes the featured slot).
+          return new Date(b._committedAt || 0) - new Date(a._committedAt || 0);
         });
 
         // 1) Featured = newest published post (never changes on Load More).
