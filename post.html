@@ -18,10 +18,12 @@
   .post-hero .byline b{color:var(--plum);font-weight:500}
 
   .post-cover{max-width:980px;margin:32px auto 48px;padding:0 32px}
-  /* Featured image: full container width, capped at 500px tall.
-     object-fit:cover crops nicely instead of stretching when the
-     source image's aspect ratio doesn't match. */
-  .post-cover img{display:block;width:100%;max-height:500px;height:500px;object-fit:cover;border-radius:3px;box-shadow:0 30px 80px -30px rgba(90,47,58,.25)}
+  /* Featured image: scales down proportionally to fit the container,
+     capped at 500px tall, never cropped, centered horizontally.
+     width:auto + max-width:100% keeps natural width but prevents
+     overflow. object-fit:contain is a safeguard if a height is
+     ever applied — the image is letterboxed rather than cropped. */
+  .post-cover img{display:block;width:auto;max-width:100%;max-height:500px;object-fit:contain;margin:0 auto;border-radius:3px;box-shadow:0 30px 80px -30px rgba(90,47,58,.25)}
 
   .post-body{max-width:680px;margin:0 auto;padding:0 32px 96px;font-family:var(--serif);font-size:19px;line-height:1.7;color:var(--ink);text-wrap:pretty}
   .post-body > :first-child{margin-top:0}
