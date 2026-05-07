@@ -181,8 +181,8 @@
 
 <section style="background:var(--plum);padding:80px 32px;text-align:center;color:var(--rose-tint)">
   <div style="max-width:680px;margin:0 auto">
-    <div style="font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);margin-bottom:18px">Be the first to read</div>
-    <h2 style="font-family:var(--serif);font-size:clamp(32px,4vw,52px);font-weight:300;line-height:1.05;letter-spacing:-.02em;color:var(--paper);margin-bottom:18px;font-variation-settings:'opsz' 144">First posts drop <em style="color:var(--rose);font-style:italic">launch week.</em></h2>
+    <div style="font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);margin-bottom:18px">Subscribe to the journal</div>
+    <h2 style="font-family:var(--serif);font-size:clamp(32px,4vw,52px);font-weight:300;line-height:1.05;letter-spacing:-.02em;color:var(--paper);margin-bottom:18px;font-variation-settings:'opsz' 144">New posts drop every <em style="color:var(--rose);font-style:italic">week.</em></h2>
     <p style="font-family:var(--serif);font-style:italic;font-size:18px;color:var(--rose-soft);margin-bottom:32px">Subscribe to the reader letter and every new essay lands in your inbox before it's anywhere else. Always sweet. Never spam.</p>
     <a href="/#newsletter" class="btn" style="background:var(--rose);color:var(--plum-deep)">Join the Letter <span class="arrow">→</span></a>
   </div>
@@ -247,11 +247,40 @@
 </footer>
 
 <script>
-  const obs = new IntersectionObserver(
-    (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); }),
-    { threshold: 0.08 }
-  );
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  // Reveal-on-scroll — hardened against the case where the observer
+  // never fires (the .reveal rule in shared/site.css hides content
+  // until .on is added; any failure here would leave the page looking
+  // blank). Three layers of defence:
+  //   1) Wrapped in an IIFE so const declarations can't collide with
+  //      anything else on the page or across browser bfcache restores.
+  //   2) Feature-detect IntersectionObserver — fall back to showing
+  //      everything immediately on browsers that don't support it.
+  //   3) Belt-and-braces: a 1.5s setTimeout that force-adds .on to any
+  //      remaining .reveal sections, no matter what.
+  (function(){
+    var revealEls = document.querySelectorAll('.reveal');
+    function showAll(){
+      revealEls.forEach(function(el){ el.classList.add('on'); });
+    }
+    if (typeof IntersectionObserver !== 'function'){
+      showAll();
+      return;
+    }
+    try {
+      var obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting) e.target.classList.add('on');
+        });
+      }, { threshold: 0.08 });
+      revealEls.forEach(function(el){ obs.observe(el); });
+    } catch (err){
+      // If observer construction throws for any reason, just show.
+      showAll();
+      return;
+    }
+    // Fallback: ensure visibility within 1.5s no matter what.
+    setTimeout(showAll, 1500);
+  })();
 </script>
 
 
@@ -260,16 +289,31 @@
   .post-card[hidden],.blog-feature[hidden]{display:none !important}
 </style>
 <script>
+  // Filter chips — case-insensitive keyword match.
+  // Each chip's data-cat (e.g. "behind", "spotlight", "process", "tropes")
+  // is matched as a substring against each card/feature's data-cat,
+  // both lowercased. This way placeholder cards (data-cat="behind")
+  // AND dynamic real posts (data-cat="behind-the-scenes" from a
+  // slugified "Behind the Scenes") both surface under the same chip,
+  // even if the CMS author types the category differently.
+  // Re-queries .post-card on each click so it picks up cards rendered
+  // later by the GitHub-fetch loader below.
   (function(){
     var chips = document.querySelectorAll('#blog-cats .chip');
-    var cards = document.querySelectorAll('.post-card');
-    var feature = document.querySelector('.blog-feature');
+    function matches(chipCat, elemCat){
+      var c = (chipCat || '').toLowerCase().trim();
+      if (c === 'all' || c === '') return true;
+      var e = (elemCat || '').toLowerCase();
+      if (!e) return false;
+      return e.indexOf(c) !== -1;
+    }
     function applyCat(cat){
-      cards.forEach(function(c){
-        c.hidden = (cat !== 'all' && c.dataset.cat !== cat);
+      document.querySelectorAll('.post-card').forEach(function(c){
+        c.hidden = !matches(cat, c.dataset.cat);
       });
-      if(feature){
-        feature.hidden = (cat !== 'all' && feature.dataset.cat !== cat);
+      var feature = document.querySelector('.blog-feature');
+      if (feature){
+        feature.hidden = !matches(cat, feature.dataset.cat);
       }
     }
     chips.forEach(function(chip){
@@ -279,6 +323,284 @@
         applyCat(chip.dataset.cat);
       });
     });
+  })();
+</script>
+
+<!--
+  ============================================================
+  Dynamic blog post loader
+  Pulls published markdown posts from the `content/blog` folder
+  on the `preview` branch of github.com/delethiadot/BJ-Ruffin-Website
+  via the public GitHub API.
+
+  Layout pattern: 1 featured + 6-card grid, ALWAYS.
+    • Newest published post → fills the .blog-feature slot
+    • Next up to 6 published posts → fill grid slots from the top
+    • Any remaining grid slots keep their original Coming Soon
+      placeholder content so the page always feels complete.
+
+  Card links go to /post.html?slug={slug} — see post.html for the
+  individual-post renderer.
+  ============================================================
+-->
+<script>
+  (function(){
+    var REPO   = 'delethia-dot/BJ-Ruffin-Website';
+    var BRANCH = 'preview';
+    var FOLDER = 'content/blog';
+
+    var grid    = document.querySelector('.blog-grid');
+    var feature = document.querySelector('.blog-feature');
+    if (!grid) return;
+
+    fetch('https://api.github.com/repos/' + REPO + '/contents/' + FOLDER + '?ref=' + BRANCH)
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(list){
+        if (!Array.isArray(list)) return;
+        var mdFiles = list.filter(function(f){
+          return f.type === 'file' && /\.md$/i.test(f.name);
+        });
+        if (!mdFiles.length) return;
+
+        return Promise.all(mdFiles.map(function(f){
+          // Two parallel fetches per file:
+          //   1) the raw markdown for front-matter parsing
+          //   2) the most recent commit that touched this exact file,
+          //      used as a tie-breaker when two posts share a `date`.
+          //      The Contents API doesn't carry timestamps, so we
+          //      hit /commits?path=... per file (capped to 1 result).
+          var contentP = fetch(f.download_url)
+            .then(function(r){ return r.ok ? r.text() : ''; });
+          var commitsUrl = 'https://api.github.com/repos/' + REPO +
+                           '/commits?sha=' + BRANCH +
+                           '&path=' + encodeURIComponent(FOLDER + '/' + f.name) +
+                           '&per_page=1';
+          var commitP = fetch(commitsUrl)
+            .then(function(r){ return r.ok ? r.json() : []; })
+            .catch(function(){ return []; });
+          return Promise.all([contentP, commitP]).then(function(results){
+            var parsed = parseFrontMatter(results[0]);
+            parsed.slug = f.name.replace(/\.md$/i, '');
+            var commit = (results[1] && results[1][0] && results[1][0].commit) || null;
+            parsed._committedAt = (commit && commit.committer && commit.committer.date) ||
+                                  (commit && commit.author    && commit.author.date)    ||
+                                  null;
+            return parsed;
+          }).catch(function(){ return null; });
+        }));
+      })
+      .then(function(posts){
+        if (!Array.isArray(posts)) return;
+        // Treat anything not explicitly flagged draft:true as published.
+        // The CMS writes draft:false by default (hidden field in
+        // admin/config.yml), so this matches the publish-from-CMS flow.
+        var published = posts.filter(function(p){ return p && p.draft !== true; });
+        if (!published.length) return; // leave all Coming Soon placeholders
+
+        published.sort(function(a, b){
+          // Primary key: the front-matter `date` (newest first).
+          var dDiff = new Date(b.date || 0) - new Date(a.date || 0);
+          if (dDiff !== 0) return dDiff;
+          // Tie-breaker: when two posts share a date, the post that
+          // was most recently committed to GitHub appears first
+          // (and therefore takes the featured slot).
+          return new Date(b._committedAt || 0) - new Date(a._committedAt || 0);
+        });
+
+        // 1) Featured = newest published post (never changes on Load More).
+        if (feature) replaceFeatured(feature, published[0]);
+
+        // 2) First batch of grid cards: up to 6 from remaining published posts.
+        //    Remaining placeholders stay in place so grid always feels full.
+        var BATCH_SIZE = 6;
+        var firstBatch = published.slice(1, 1 + BATCH_SIZE);
+        var slots = grid.querySelectorAll('.post-card');
+        for (var i = 0; i < firstBatch.length && i < slots.length; i++){
+          slots[i].replaceWith(renderCard(firstBatch[i], i));
+        }
+
+        // 3) Load More — only if more posts exist beyond the first
+        //    featured + 6 batch. Each click appends the next 6 posts.
+        //    Featured slot is untouched. When all posts are loaded the
+        //    button removes itself.
+        if (published.length > 1 + BATCH_SIZE){
+          var renderedCount = firstBatch.length; // grid cards already shown
+          var wrap = document.createElement('div');
+          wrap.className = 'load-more-wrap';
+          wrap.style.cssText = 'max-width:1440px;margin:0 auto;padding:8px 32px 80px;text-align:center';
+
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'btn btn-ghost';
+          btn.style.cursor = 'pointer';
+          btn.innerHTML = 'Load more posts <span class="arrow">→</span>';
+          wrap.appendChild(btn);
+
+          grid.parentNode.insertBefore(wrap, grid.nextSibling);
+
+          btn.addEventListener('click', function(){
+            var start = 1 + renderedCount;       // skip featured + already-rendered
+            var batch = published.slice(start, start + BATCH_SIZE);
+            batch.forEach(function(p, j){
+              grid.appendChild(renderCard(p, renderedCount + j));
+            });
+            renderedCount += batch.length;
+            // Remove button if no posts remain
+            if (1 + renderedCount >= published.length){
+              wrap.remove();
+            }
+          });
+        }
+      })
+      .catch(function(){ /* swallow — leave placeholders */ });
+
+    // ---- helpers ----
+    function parseFrontMatter(raw){
+      var m = /^---\s*\n([\s\S]*?)\n---\s*\n?([\s\S]*)$/.exec(raw || '');
+      if (!m) return { body: raw || '', draft: true };
+      var fm = {};
+      m[1].split('\n').forEach(function(line){
+        var lm = /^(\w+):\s*(.*)$/.exec(line);
+        if (!lm) return;
+        var v = lm[2].trim();
+        if ((v.charAt(0) === '"' && v.slice(-1) === '"') ||
+            (v.charAt(0) === "'" && v.slice(-1) === "'")) v = v.slice(1,-1);
+        if (v === 'true')  v = true;
+        else if (v === 'false') v = false;
+        fm[lm[1]] = v;
+      });
+      fm.body = m[2] || '';
+      return fm;
+    }
+
+    function postUrl(slug){
+      return '/post.html?slug=' + encodeURIComponent(slug);
+    }
+
+    function replaceFeatured(node, p){
+      // data-cat carries the raw front-matter category (lowercased) so
+      // the filter can substring-match against it.
+      node.dataset.cat = (p.category || '').toString().toLowerCase();
+
+      var art = node.querySelector('.art');
+      if (art){
+        // remove the static "Featured · Coming Soon" label
+        art.innerHTML = '';
+        if (p.featured_image){
+          // Use the front-matter path verbatim as the <img> src — no
+          // string transformations, no encoding, no modifications.
+          var img = document.createElement('img');
+          img.src     = p.featured_image;
+          img.alt     = p.title || '';
+          img.loading = 'lazy';
+          img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block';
+          art.appendChild(img);
+        }
+      }
+
+      // Pill label = "Latest · {Category from front matter}"
+      // — falls back to just "Latest" if the post has no category set.
+      var pill = node.querySelector('.pill');
+      if (pill) pill.textContent = p.category ? ('Latest · ' + p.category) : 'Latest';
+
+      var h2 = node.querySelector('h2');
+      if (h2) h2.textContent = p.title || p.slug;
+
+      var paragraphs = node.querySelectorAll('p');
+      var byline    = node.querySelector('.byline');
+      var bodyPara  = null;
+      paragraphs.forEach(function(pp){ if (!pp.classList.contains('byline')) bodyPara = pp; });
+
+      if (byline){
+        byline.innerHTML = 'Posted <b>' + escapeHtml(formatDate(p.date)) + '</b> · By BJ Ruffin';
+      }
+      if (bodyPara){
+        bodyPara.textContent = excerptFrom(p.body, 280);
+      }
+
+      var read = node.querySelector('a.read');
+      if (read){
+        read.href = postUrl(p.slug);
+        read.textContent = 'Read the post →';
+      }
+    }
+
+    function renderCard(p, idx){
+      var a = document.createElement('a');
+      a.href = postUrl(p.slug);
+      a.className = 'post-card p' + ((idx % 5) + 2); // p2..p6 cycle
+      // data-cat carries the raw front-matter category (lowercased) so
+      // the filter substring-matches against the same value the editor
+      // selected from the CMS dropdown.
+      a.dataset.cat = (p.category || '').toString().toLowerCase();
+
+      var art = document.createElement('div');
+      art.className = 'art';
+      if (p.featured_image){
+        // Use the front-matter path verbatim as the <img> src — no
+        // string transformations, no encoding, no modifications.
+        var img = document.createElement('img');
+        img.src     = p.featured_image;
+        img.alt     = p.title || '';
+        img.loading = 'lazy';
+        img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block';
+        art.appendChild(img);
+      }
+      a.appendChild(art);
+
+      // Category label — read straight from the post's front matter.
+      var cat = document.createElement('div');
+      cat.className = 'cat';
+      cat.textContent = p.category || '';
+      a.appendChild(cat);
+
+      var h3 = document.createElement('h3');
+      h3.textContent = p.title || p.slug;
+      a.appendChild(h3);
+
+      var excerpt = document.createElement('p');
+      excerpt.className = 'excerpt';
+      excerpt.textContent = excerptFrom(p.body, 160);
+      a.appendChild(excerpt);
+
+      var when = document.createElement('div');
+      when.className = 'when';
+      when.textContent = formatDate(p.date);
+      a.appendChild(when);
+
+      return a;
+    }
+
+    function slugifyCat(cat){
+      return (cat || '').toString().toLowerCase().trim().replace(/\s+/g, '-');
+    }
+
+    function excerptFrom(body, max){
+      if (!body) return '';
+      var txt = body
+        .replace(/^---[\s\S]*?---\s*/, '')
+        .replace(/^#+\s+/gm, '')
+        .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
+        .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+        .replace(/\*\*|__|\*|_/g, '')
+        .replace(/`+/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+      return txt.length > max ? txt.slice(0, max).trim() + '…' : txt;
+    }
+
+    function formatDate(d){
+      if (!d) return '';
+      var date = new Date(d);
+      if (isNaN(date.getTime())) return '';
+      return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    }
+
+    function escapeHtml(s){
+      return String(s).replace(/[&<>"']/g, function(c){
+        return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+      });
+    }
   })();
 </script>
 </body>

@@ -1,7 +1,12 @@
 backend:
   name: git-gateway
   repo: delethia-dot/BJ-Ruffin-Website
-  branch: main
+  # Site reads from `preview`; CMS must write to the same branch so
+  # the Publish button puts posts where the site can find them.
+  branch: preview
+
+# Editorial workflow is intentionally NOT enabled — the standard
+# Save/Publish action commits straight to the configured branch.
 
 media_folder: "images/blog"
 public_folder: "/images/blog"
@@ -15,6 +20,14 @@ collections:
     fields:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Date", name: "date", widget: "datetime"}
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options:
+          - "Sweet and Clean Romance Spotlight"
+          - "Tropes We Love"
+          - "Behind the Scenes"
+          - "Writing Process"
       - {label: "Draft", name: "draft", widget: "boolean", default: true}
       - {label: "Featured Image", name: "featured_image", widget: "image", required: false}
       - {label: "Body", name: "body", widget: "markdown"}
