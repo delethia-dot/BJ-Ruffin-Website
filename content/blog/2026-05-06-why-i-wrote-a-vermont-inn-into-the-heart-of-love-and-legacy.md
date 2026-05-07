@@ -2,7 +2,7 @@
 title: Why I Wrote a Vermont Inn Into the Heart of Love and Legacy
 date: 2026-05-06
 category: Behind the Scenes
-draft: false
+draft: true
 featured_image: /images/blog/2026-05-06-why-i-wrote-a-vermont-inn-into-the-heart-of-love-and-legacy.jpg
 ---
 
